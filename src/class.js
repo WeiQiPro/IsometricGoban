@@ -10,8 +10,8 @@ class Coordinate{
         player,
         adjacent,
         aspect,
-        letter = 'A',
-        number = '9'
+        letter,
+        number
     }) {
         this.CoorPosition = position
         this.CoorImage = image
@@ -51,7 +51,7 @@ class Coordinate{
         goban.visual().moveTo(0, 0);
         goban.visual().fillText (
             this.CoorLetter,
-            (this.CoorPosition.x - this.CoorPosition.y) * this.CoorAspect.width / 2 - 12.5,
+            (this.CoorPosition.x - this.CoorPosition.y) * this.CoorAspect.width / 2 - 25,
             (this.CoorPosition.x + this.CoorPosition.y) * this.CoorAspect.height / 2 - 12.5
         )
     }
