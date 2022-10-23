@@ -1,0 +1,30 @@
+Functionality:
+
+[] Build Visual Grid
+    []Isomer Build
+    []Homemade Grid
+[] Make it Isometric
+[] Render Stones
+[] Alternate Colors
+[] Go rules
+[] Audio
+    [] Stone click
+    [] Clock
+-----------------------------
+
+Multiplayer Functionality:
+
+[] OGS Live API
+[] Player profile
+[] Chatbox
+-----------------------------
+
+Quality of life:
+
+[] SGF Download
+[] SGF Upload
+[] Skins
+    [] Stones
+    [] Boards
+    [] Characters
+[] Characters
