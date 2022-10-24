@@ -1,9 +1,14 @@
-let drawCoor = function(x){
+let drawCoor = function(y){
+    let x = y
+    lettersNumbers(x)
+    drawPhaseA(x)
+    drawPhaseB(x)
+}
+
+let drawPhaseA = function(x){
 
     let lastRow = x[360].CoorPosition.y
     let firstRow = x[0].CoorPosition.y
-
-    lettersNumbers(x)
 
     for(let i = 0; i < x.length; i++){
         if(i % 19 !== 18 && x[i].CoorPosition.y < lastRow){
@@ -36,7 +41,16 @@ let drawCoor = function(x){
     }
 }
 
-function lettersNumbers(x){
+let drawPhaseB = function(x){
+    for(let i = 0; i < x.length; i++) {
+        x[i].CoorCircle.x = (x[i].CoorPosition.x - x[i].CoorPosition.y) * x[i].CoorAspect.width / 2
+        x[i].CoorCircle.y = (x[i].CoorPosition.x + x[i].CoorPosition.y) * x[i].CoorAspect.height / 2
+
+        x[i].circleDraw()
+    }
+}
+
+let lettersNumbers = function(x){
     let coorArray = []
     for(let i = 0; i < x.length; i++){
 
@@ -46,19 +60,18 @@ function lettersNumbers(x){
             coorArray.push(x[i])
         }
     }
-    console.log(coorArray)
 
     for(let i = 0; i < coorArray.length; i++){
-        coorArray[i].CoorLetter = intializeLetters(i % 19)
+        coorArray[i].CoorLetter = intializeLetters(18 - (i % 19))
     }
 }
 
-function intializeLetters(x){
+let intializeLetters = function(x){
         const letters = ['A','B','C','D','E','F','G','H','J','K','L','M','N','O','P','Q','R','S','T']
         return letters[x]
 }
 
-function intializeNumbers(x){
+let intializeNumbers = function(x){
         const numbers = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
         return numbers[x]
 }
@@ -70,7 +83,7 @@ function intializeNumbers(x){
 //     })
 // }
 
-function visualUpdate(){
+let visualUpdate = function(){
     goban.visual().translate(goban.width/2, 50)
     goban.visual().fillStyle = 'white'
     goban.visual().fillRect(
@@ -81,7 +94,12 @@ function visualUpdate(){
     )
 }
 
-function drawboard(){
+let drawboard = function(){
     board()
     drawCoor(coordinates)
+}
+
+let update = function() {
+    requestAnimationFrame(update)
+    mouse.move()
 }

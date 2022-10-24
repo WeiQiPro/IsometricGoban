@@ -11,7 +11,8 @@ class Coordinate{
         adjacent,
         aspect,
         letter,
-        number
+        number,
+        circle
     }) {
         this.CoorPosition = position
         this.CoorImage = image
@@ -20,6 +21,7 @@ class Coordinate{
         this.CoorAspect = aspect
         this.CoorLetter = letter
         this.CoorNumber = number
+        this.CoorCircle = circle
     }
 
 
@@ -43,6 +45,19 @@ class Coordinate{
         goban.visual().stroke();
 
         goban.visual().restore();
+    }
+
+    circleDraw(){
+        goban.visual().beginPath();
+        goban.visual().arc(
+            (this.CoorPosition.x - this.CoorPosition.y) * this.CoorAspect.width / 2,
+            (this.CoorPosition.x + this.CoorPosition.y) * this.CoorAspect.height / 2,
+            this.CoorCircle.radius,
+            0,
+            2 * Math.PI
+        );
+        goban.visual().strokeStyle = 'rgb(0,0,0,0)'
+        goban.visual().stroke();
     }
 
     letisoDraw(){

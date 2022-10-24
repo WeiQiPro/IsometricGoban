@@ -30,6 +30,11 @@ let board = function(){
                                 width: 50,
                                 height: 25
                             },
+                            circle: {
+                                x: j,
+                                y: i,
+                                radius: 12,
+                            }
                         })
                     )
         }})
