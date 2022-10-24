@@ -5,4 +5,9 @@ visualUpdate()
 initializeBoard()
 drawboard()
 
-update()
+
+// function update() {
+//     requestAnimationFrame(update)
+// }
+// update()
+mouse.move(goban.board())

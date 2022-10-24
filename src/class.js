@@ -12,7 +12,8 @@ class Coordinate{
         aspect,
         letter,
         number,
-        circle
+        circle,
+        stone = null
     }) {
         this.CoorPosition = position
         this.CoorImage = image
@@ -22,6 +23,7 @@ class Coordinate{
         this.CoorLetter = letter
         this.CoorNumber = number
         this.CoorCircle = circle
+        this.stone = stone
     }
 
 
@@ -48,32 +50,48 @@ class Coordinate{
     }
 
     circleDraw(){
-        goban.visual().beginPath();
-        goban.visual().arc(
-            (this.CoorPosition.x - this.CoorPosition.y) * this.CoorAspect.width / 2,
-            (this.CoorPosition.x + this.CoorPosition.y) * this.CoorAspect.height / 2,
+        stone.visual().beginPath();
+        stone.visual().arc(
+            this.CoorCircle.x,
+            this.CoorCircle.y,
             this.CoorCircle.radius,
             0,
             2 * Math.PI
         );
-        goban.visual().strokeStyle = 'rgb(0,0,0,0)'
-        goban.visual().stroke();
+        stone.visual().strokeStyle = 'rgb(0,0,0,0)'
+        stone.visual().stroke();
+    }
+    collisionCircle(x){
+       if (x = true){
+            stone.visual().beginPath();
+            stone.visual().arc(
+                (this.CoorPosition.x - this.CoorPosition.y) * this.CoorAspect.width / 2,
+                (this.CoorPosition.x + this.CoorPosition.y) * this.CoorAspect.height / 2,
+                this.CoorCircle.radius,
+                0,
+                2 * Math.PI
+            );
+            stone.visual().strokeStyle = 'black'
+            stone.visual().stroke();
+        } else if ( x != true) {
+            stone.visual().clear(-stone.width / 2, 50)
+        }
     }
 
     letisoDraw(){
-        goban.visual().font = '25px serif'
-        goban.visual().fillStyle = 'black'
-        goban.visual().moveTo(0, 0);
-        goban.visual().fillText (
+        stone.visual().font = '25px serif'
+        stone.visual().fillStyle = 'black'
+        stone.visual().moveTo(0, 0);
+        stone.visual().fillText (
             this.CoorLetter,
             (this.CoorPosition.x - this.CoorPosition.y) * this.CoorAspect.width / 2 - 25,
             (this.CoorPosition.x + this.CoorPosition.y) * this.CoorAspect.height / 2 - 12.5
         )
     }
     letregDraw(){
-        goban.visual().font = '25px serif'
-        goban.visual().fillStyle = 'black'
-        goban.visual().fillText (
+        stone.visual().font = '25px serif'
+        stone.visual().fillStyle = 'black'
+        stone.visual().fillText (
             'A',
             ((this.CoorPosition.x * this.CoorAspect.width) + 5) + this.CoorAspect.height,
             ((this.CoorPosition.y * this.CoorAspect.width) + this.CoorAspect.width / 2
@@ -81,10 +99,10 @@ class Coordinate{
     }
 
     numisoDraw(){
-        goban.visual().font = '25px serif'
-        goban.visual().fillStyle = 'black'
-        goban.visual().moveTo(0, 0);
-        goban.visual().fillText (
+        stone.visual().font = '25px serif'
+        stone.visual().fillStyle = 'black'
+        stone.visual().moveTo(0, 0);
+        stone.visual().fillText (
             this.CoorNumber,
             (this.CoorPosition.x - this.CoorPosition.y) * this.CoorAspect.width / 2 + 12.5,
             (this.CoorPosition.x + this.CoorPosition.y) * this.CoorAspect.height / 2 - 12.5
@@ -92,9 +110,9 @@ class Coordinate{
     }
 
     numregDraw(){
-        goban.visual().font = '25px serif'
-        goban.visual().fillStyle = 'black'
-        goban.visual().fillText(
+        stone.visual().font = '25px serif'
+        stone.visual().fillStyle = 'black'
+        stone.visual().fillText(
             '1',
             ((this.CoorPosition.x * this.CoorAspect.width) + 5) + 0.35,
             ((this.CoorPosition.y * this.CoorAspect.width) + this.CoorAspect.width

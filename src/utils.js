@@ -76,15 +76,8 @@ let intializeNumbers = function(x){
         return numbers[x]
 }
 
-
-// let forLoops = function(){
-//     coordinates.forEach(coordinate =>{
-
-//     })
-// }
-
 let visualUpdate = function(){
-    goban.visual().translate(goban.width/2, 50)
+    goban.visual().translate(goban.width / 2, 100)
     goban.visual().fillStyle = 'white'
     goban.visual().fillRect(
         0,
@@ -92,6 +85,7 @@ let visualUpdate = function(){
         goban.width,
         goban.height
     )
+    // goban.visual().translate(-goban.width/2, 50)
 }
 
 let drawboard = function(){
@@ -99,7 +93,19 @@ let drawboard = function(){
     drawCoor(coordinates)
 }
 
-let update = function() {
-    requestAnimationFrame(update)
-    mouse.move()
+let stoneMouseCollision = function(point, circle, circleAspect, radius) {
+
+    let mouseX = point.x
+    let mouseY = point.y
+
+
+    let translateR = radius
+    let distX = mouseX - circle.x
+    let distY = mouseY - circle.y
+
+    let distance = Math.sqrt((distX * distX) + (distY * distY))
+
+    if (distance <= translateR) {
+        return true
+    } return false
 }
