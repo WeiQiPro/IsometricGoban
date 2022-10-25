@@ -23,7 +23,7 @@ let board = function(){
                     coordinates.push(
                         new Coordinate ({
                             position: {
-                                x: j ,
+                                x: j,
                                 y: i
                             },
                             aspect: {

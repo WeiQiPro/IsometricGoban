@@ -1,5 +1,5 @@
 let coordinates = []
-let mouseClick = 'iso'
+let mouseClick = 'reg'
 
 visualUpdate()
 initializeBoard()

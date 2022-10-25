@@ -15,15 +15,13 @@ const mouse = {
         move: function(board) {addEventListener('mousemove', (e) =>{
                 let rect = board.getBoundingClientRect()
                 mouse.position.x = e.clientX - Math.round(window.scrollX)
-                console.log('mouse position x', e.clientX)
                 mouse.position.y = e.clientY - Math.round(window.scrollY)
-                console.log('mouse position y', e.clientY)
                 coordinates.forEach(Coordinate =>{
                         let coordinate = Coordinate
-                        if(stoneMouseCollision(mouse.position, coordinate.CoorPosition, coordinate.CoorAspect, coordinate.CoorCircle.radius) && coordinate.stone === null){
-                                        coordinate.collisionCircle(stoneMouseCollision(mouse.position, coordinate.CoorPosition, coordinate.CoorAspect, coordinate.CoorCircle.radius))
-                                        coordinate.stone = 'fill'
-                        }
+                        // if(stoneMouseCollision(mouse.position, coordinate.CoorPosition, coordinate.CoorAspect, coordinate.CoorCircle.radius) && coordinate.stone === null){
+                        //                 coordinate.collisionCircle()
+                        //                 coordinate.stone = 'fill'
+                        // }
                     })
         })},
         position: {
