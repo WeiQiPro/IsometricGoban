@@ -1,62 +1,62 @@
 let drawCoor = function (y) {
     let x = y;
-    lettersNumbers(x);
+    initializeCharacters(x);
     drawPhaseA(x);
   };
 
-  let drawPhaseA = function (x) {
+let drawPhaseA = function (x) {
     let lastRow = x[360].CoorPosition.y;
     let firstRow = x[0].CoorPosition.y;
 
     for (let i = 0; i < x.length; i++) {
       if (i % 19 !== 18 && x[i].CoorPosition.y < lastRow) {
-        if (mouseClick === "reg") {
-          x[i].drawRegular();
-        } else if (mouseClick === "iso") {
-          x[i].drawIsometric();
+        if (viewType === "reg") {
+          x[i].drawBoard(regularBoard);
+        } else if (viewType === "iso") {
+          x[i].drawBoard(isometricBoard);
         }
       }
     }
 
     for (let i = 0; i < x.length; i++) {
       if (i % 19 == 18) {
-        if (mouseClick === "reg") x[i].drawRegularLetter();
+        if (viewType === "reg") x[i].drawLetter(regularLetter);
       } else if (i % 19 == 0) {
-        if (mouseClick === "iso") x[i].drawIsometricLetter();
+        if (viewType === "iso") x[i].drawLetter(isometricLetter);
       }
     }
 
     for (let i = 0; i < x.length; i++) {
       if (x[i].CoorPosition.y == lastRow) {
-        if (mouseClick === "reg") x[i].drawRegularNumber();
+        if (viewType === "reg") x[i].drawNumber(regularNumber);
       } else if (x[i].CoorPosition.y == firstRow) {
-        if (mouseClick === "iso") x[i].drawIsometricNumber();
+        if (viewType === "iso") x[i].drawNumber(isometricNumber);
       }
     }
   };
 
-  let lettersNumbers = function (x) {
+let initializeCharacters = function (x) {
     let coorArray = [];
     for (let i = 0; i < x.length; i++) {
       x[i].CoorLetter = intializeLetters(i % 19);
       x[i].CoorNumber = intializeNumbers(i % 19);
-      if (x[i].CoorLetter == "A" && mouseClick === "iso") {
+      if (x[i].CoorLetter == "A" && viewType === "iso") {
         coorArray.push(x[i]);
-      } else if (x[i].CoorLetter == "T" && mouseClick === "reg") {
+      } else if (x[i].CoorLetter == "T" && viewType === "reg") {
         coorArray.push(x[i]);
       }
     }
 
     for (let i = 0; i < coorArray.length; i++) {
-      if (mouseClick === "reg") {
+      if (viewType === "reg") {
         coorArray[i].CoorLetter = intializeLetters(i % 19);
-      } else if (mouseClick === "iso") {
+      } else if (viewType === "iso") {
         coorArray[i].CoorLetter = intializeLetters(18 - (i % 19));
       }
     }
   };
 
-  let intializeLetters = function (x) {
+let intializeLetters = function (x) {
     const letters = [
       "A",
       "B",
@@ -81,7 +81,7 @@ let drawCoor = function (y) {
     return letters[x];
   };
 
-  let intializeNumbers = function (x) {
+let intializeNumbers = function (x) {
     const numbers = [
       1,
       2,
@@ -104,14 +104,4 @@ let drawCoor = function (y) {
       19,
     ];
     return numbers[x];
-  };
-
-  let visualUpdate = function () {
-    goban.visual().fillStyle = "white";
-    goban.visual().fillRect(0, 0, goban.width, goban.height);
-  };
-
-  let drawboard = function () {
-    board();
-    drawCoor(coordinates);
   };

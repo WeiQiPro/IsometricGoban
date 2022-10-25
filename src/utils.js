@@ -16,7 +16,14 @@ let stoneMouseCollision = function (point, circle, circleAspect, radius) {
     return false;
   };
 
-  let regularBoard = function (CoorP, CoorA) {
+let initializeBoard = function () {
+    goban.visual().fillStyle = "white";
+    goban.visual().fillRect(0, 0, goban.width, goban.height);
+    board();
+    drawCoor(coordinates);
+  };
+
+let regularBoard = function (CoorP, CoorA) {
     goban.visual().lineWidth = 1.5;
     goban.visual().strokeStyle = "black";
     goban
@@ -29,12 +36,12 @@ let stoneMouseCollision = function (point, circle, circleAspect, radius) {
       );
   };
 
-  let isometricBoard = function (CoorP, CoorA) {
+let isometricBoard = function (CoorP, CoorA) {
     goban.visual().save();
     goban.visual()
       .translate(
         ((CoorP.x - CoorP.y) * CoorA.width) / 2 + goban.width / 4,
-        ((CoorPosition.x + CoorPosition.y) * CoorA.height) / 2 + 100
+        ((CoorP.x + CoorP.y) * CoorA.height) / 2 + 100
       );
 
     goban.visual().beginPath();
@@ -49,7 +56,7 @@ let stoneMouseCollision = function (point, circle, circleAspect, radius) {
     goban.visual().restore();
   };
 
-  let circleDraw = function () {
+let circleDraw = function () {
     stone.visual().beginPath();
     stone
       .visual()
@@ -57,15 +64,15 @@ let stoneMouseCollision = function (point, circle, circleAspect, radius) {
     stone.visual().strokeStyle = "rgb(0,0,0,0)";
     stone.visual().stroke();
   };
-  let collisionCircle = function (x) {
+let collisionCircle = function (x) {
     if ((x = true)) {
       stone.visual().beginPath();
       stone
         .visual()
         .arc(
-          ((CoorPosition.x - CoorPosition.y) * CoorAspect.width) / 2 +
+          ((CoorP.x - CoorP.y) * CoorAspect.width) / 2 +
             goban.width / 4,
-          ((CoorPosition.x + CoorPosition.y) * CoorAspect.height) / 2 + 100,
+          ((CoorP.x + CoorP.y) * CoorAspect.height) / 2 + 100,
           CoorCircle.radius,
           0,
           2 * Math.PI
@@ -75,7 +82,7 @@ let stoneMouseCollision = function (point, circle, circleAspect, radius) {
     }
   };
 
-  let isometricLetter = function (CoorP, CoorA, CoorL) {
+let isometricLetter = function (CoorP, CoorA, CoorL) {
     stone.visual().font = "25px serif";
     stone.visual().fillStyle = "black";
     stone.visual().moveTo(0, 0);
@@ -87,7 +94,7 @@ let stoneMouseCollision = function (point, circle, circleAspect, radius) {
         ((CoorP.x + CoorP.y) * CoorA.height) / 2 + 100 - 12.5
       );
   };
-  let regularLetter = function (CoorP, CoorA, CoorL) {
+let regularLetter = function (CoorP, CoorA, CoorL) {
     stone.visual().font = "16px serif";
     stone.visual().fillStyle = "black";
     stone
@@ -99,7 +106,7 @@ let stoneMouseCollision = function (point, circle, circleAspect, radius) {
       );
   };
 
-  let isometricNumber = function (CoorP, CoorA, CoorN) {
+let isometricNumber = function (CoorP, CoorA, CoorN) {
     stone.visual().font = "25px serif";
     stone.visual().fillStyle = "black";
     stone.visual().moveTo(0, 0);
@@ -112,7 +119,7 @@ let stoneMouseCollision = function (point, circle, circleAspect, radius) {
       );
   };
 
-  let regularNumber = function (CoorP, CoorA, CoorN) {
+let regularNumber = function (CoorP, CoorA, CoorN) {
     stone.visual().font = "16px serif";
     stone.visual().fillStyle = "black";
     stone

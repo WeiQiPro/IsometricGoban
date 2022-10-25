@@ -1,8 +1,4 @@
 class Coordinate {
-    static aspect = {
-      width: 50,
-      height: 25,
-    };
 
     constructor({
       position,
@@ -30,27 +26,16 @@ class Coordinate {
     // drawRegular && drawIsometric pertain to the tiles drawn
     // drawLetters && drawNumbers pertain to the coordinate labeling on the outside
 
-    drawRegular() {
-      regularBoard(this.CoorPosition, this.CoorAspect);
+    drawBoard(boardtype) {
+      return boardtype(this.CoorPosition, this.CoorAspect);
     }
 
-    drawIsometric() {
-      isometricBoard(this.CoorPosition, this.CoorAspect);
+    drawLetter(boardtype) {
+      return boardtype(this.CoorPosition, this.CoorAspect, this.CoorLetter);
     }
 
-    drawRegularLetter() {
-      regularLetter(this.CoorPosition, this.CoorAspect, this.CoorLetter);
+    drawNumber(boardtype) {
+      return boardtype(this.CoorPosition, this.CoorAspect, this.CoorNumber);
     }
 
-    drawIsometricLetter() {
-      isometricLetter(this.CoorPosition, this.CoorAspect, this.CoorLetter);
-    }
-
-    drawRegularNumber() {
-      regularNumber(this.CoorPosition, this.CoorAspect, this.CoorNumber);
-    }
-
-    drawIsometricNumber() {
-      isometricNumber(this.CoorPosition, this.CoorAspect, this.CoorNumber);
-    }
   }

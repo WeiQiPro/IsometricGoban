@@ -1,13 +1,6 @@
 let coordinates = []
-let mouseClick = 'reg'
+let viewType = 'reg'
 
-visualUpdate()
+createboardGrid()
 initializeBoard()
-drawboard()
-
-
-// function update() {
-//     requestAnimationFrame(update)
-// }
-// update()
-mouse.move(goban.board())
+mouse.move()

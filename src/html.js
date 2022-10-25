@@ -13,17 +13,11 @@ const stone = {
 
 const mouse = {
         move: function(board) {addEventListener('mousemove', (e) =>{
-                let rect = board.getBoundingClientRect()
+                let rect = goban.board().getBoundingClientRect()
                 mouse.position.x = e.clientX - Math.round(window.scrollX)
                 mouse.position.y = e.clientY - Math.round(window.scrollY)
-                coordinates.forEach(Coordinate =>{
-                        let coordinate = Coordinate
-                        // if(stoneMouseCollision(mouse.position, coordinate.CoorPosition, coordinate.CoorAspect, coordinate.CoorCircle.radius) && coordinate.stone === null){
-                        //                 coordinate.collisionCircle()
-                        //                 coordinate.stone = 'fill'
-                        // }
-                    })
-        })},
+                }
+        )},
         position: {
                 x: 0,
                 y: 0
