@@ -22,13 +22,13 @@ let board = function () {
                 y: i,
               },
               aspect: {
-                width: 50,
-                height: 25,
+                width: 30,
+                height: 15,
               },
               circle: {
                 x: j,
                 y: i,
-                radius: 12,
+                radius: 7,
               },
             })
           );
