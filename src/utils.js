@@ -14,9 +14,9 @@ let initializeBoard = function () {
 };
 
 // draws on the gobanCanvas
-let viewBoardType = function (CoorP, CoorA) {
+let viewBoardType = function (position, aspectratio) {
   goban.visual().save();
-  if (viewType === "iso") {
+  if (viewType === "isometric") {
     goban
       .visual()
       .transform(
@@ -33,24 +33,24 @@ let viewBoardType = function (CoorP, CoorA) {
   goban
     .visual()
     .strokeRect(
-      CoorP.x * CoorA.height + 30,
-      CoorP.y * CoorA.height + 30,
-      CoorA.height,
-      CoorA.height
+      position.x * aspectratio.height + 30,
+      position.y * aspectratio.height + 30,
+      aspectratio.height,
+      aspectratio.height
     );
     goban.visual().fillStyle = ' rgb(160, 110, 49)'
     goban
       .visual()
       .fillRect(
-        CoorP.x * CoorA.height + 30,
-        CoorP.y * CoorA.height + 30,
-        CoorA.height,
-        CoorA.height
+        position.x * aspectratio.height + 30,
+        position.y * aspectratio.height + 30,
+        aspectratio.height,
+        aspectratio.height
       );
   goban.visual().restore();
 };
 // draws on the mouseCanvas
-let stonemouseHover = function (CoorP, CoorA, radius, CoorC) {
+let stonemouseHover = function (position, aspectratio, radius, color) {
   {
     mouse.visual().save();
     mouse
@@ -67,20 +67,20 @@ let stonemouseHover = function (CoorP, CoorA, radius, CoorC) {
     mouse
       .visual()
       .arc(
-        CoorP.x * CoorA.height + 30,
-        CoorP.y * CoorA.height + 30,
+        position.x * aspectratio.height + 30,
+        position.y * aspectratio.height + 30,
         radius,
         0,
         2 * Math.PI
       );
-    if(CoorC === colorType[2]){
+    if(color === colorType[2]){
       mouse.visual().strokeStyle = colorType[1];
       mouse.visual().stroke();
-      mouse.visual().fillStyle = CoorC;
+      mouse.visual().fillStyle = color;
       mouse.visual().fill();
     }
     else {
-      mouse.visual().fillStyle = CoorC;
+      mouse.visual().fillStyle = color;
       mouse.visual().fill();
     }
     mouse.visual().closePath();
@@ -88,7 +88,7 @@ let stonemouseHover = function (CoorP, CoorA, radius, CoorC) {
   }
 };
 
-let stonedrawType = function (CoorP, CoorA, radius, CoorC) {
+let stonedrawType = function (position, aspectratio, radius, color) {
   {
     stone.visual().save();
     stone
@@ -105,20 +105,20 @@ let stonedrawType = function (CoorP, CoorA, radius, CoorC) {
     stone
       .visual()
       .arc(
-        CoorP.x * CoorA.height + 30,
-        CoorP.y * CoorA.height + 30,
+        position.x * aspectratio.height + 30,
+        position.y * aspectratio.height + 30,
         radius,
         0,
         2 * Math.PI
       );
-    if(CoorC === colorType[2]){
+    if(color === colorType[2]){
       stone.visual().strokeStyle = colorType[1];
       stone.visual().stroke();
-      stone.visual().fillStyle = CoorC;
+      stone.visual().fillStyle = color;
       stone.visual().fill();
     }
     else {
-      stone.visual().fillStyle = CoorC;
+      stone.visual().fillStyle = color;
       stone.visual().fill();
     }
     stone.visual().closePath();
@@ -126,26 +126,26 @@ let stonedrawType = function (CoorP, CoorA, radius, CoorC) {
   }
 };
 
-let mouseoverCoordinate = function (point, circle, circleAspect, radius) {
-  let circleXY = {
-    x: circle.x * circleAspect.height + 30,
-    y: circle.y * circleAspect.height + 30,
+let mouseoverCoordinate = function (mousePosition, circle, aspect, radius) {
+  let circlePosition = {
+    x: circle.x * aspect.height + 30,
+    y: circle.y * aspect.height + 30,
   };
-  let distX = point.x - circleXY.x;
-  let distY = point.y - circleXY.y;
+  let distX = mousePosition.x - circlePosition.x;
+  let distY = mousePosition.y - circlePosition.y;
 
   let distance = Math.sqrt(distX * distX + distY * distY);
 
   if (distance <= radius) {
     return true;
-  } mouse.visual().clearRect(circleXY.x, circleXY.y, 0,0);
+  } mouse.visual().clearRect(circlePosition.x, circlePosition.y, 0,0);
 };
 
-let coordinateLetters = function (CoorP, CoorA, CoorL) {
+let coordinateLetters = function (position, aspectratio, character) {
   stone.visual().font = "12px serif";
   stone.visual().fillStyle = "black";
   stone.visual().save();
-  if (viewType === "iso") {
+  if (viewType === "isometric") {
     stone
       .visual()
       .transform(
@@ -160,15 +160,15 @@ let coordinateLetters = function (CoorP, CoorA, CoorL) {
   stone.visual().beginPath();
   stone
     .visual()
-    .fillText(CoorL, CoorP.x * CoorA.height + 15, CoorP.y * CoorA.height + 30);
+    .fillText(character, position.x * aspectratio.height + 15, position.y * aspectratio.height + 30);
   stone.visual().restore();
 };
 
-let coordinateNumbers = function (CoorP, CoorA, CoorL) {
+let coordinateNumbers = function (position, aspectratio, character) {
   stone.visual().font = "12px serif";
   stone.visual().fillStyle = "black";
   stone.visual().save();
-  if (viewType === "iso") {
+  if (viewType === "isometric") {
     stone
       .visual()
       .transform(
@@ -183,35 +183,32 @@ let coordinateNumbers = function (CoorP, CoorA, CoorL) {
   stone.visual().beginPath();
   stone
     .visual()
-    .fillText(CoorL, CoorP.x * CoorA.height + 25, CoorP.y * CoorA.height + 20);
+    .fillText(character, position.x * aspectratio.height + 25, position.y * aspectratio.height + 20);
   stone.visual().restore();
 };
 
-let inverseMatrix = function () {
-  let m = matrix; // just to make it easier to type and read
-  let im = invMatrix; // just to make it easier to type and read
-
+let inverseMatrixFunction = function () {
   // calculate the inverse transformation
 
   // first get the cross product of x axis and y axis
-  crossx = m[0] * m[3] - m[1] * m[2];
+  crossx = matrix[0] * matrix[3] - matrix[1] * matrix[2];
 
   // now get the inverted axis
-  im[0] = m[3] / crossx;
-  im[1] = -m[1] / crossx;
-  im[2] = -m[2] / crossx;
-  im[3] = m[0] / crossx;
-  //im[4] = m[4];
-  //im[5] = m[5];
+  inverseMatrix[0] = matrix[3] / crossx;
+  inverseMatrix[1] = -matrix[1] / crossx;
+  inverseMatrix[2] = -matrix[2] / crossx;
+  inverseMatrix[3] = matrix[0] / crossx;
+  //inverseMatrix[4] = matrix[4];
+  //inverseMatrix[5] = matrix[5];
 };
 
 let toWorld = function (x, y) {
   let xx, yy, result;
   xx = x - matrix[4]; // remove the translation
   yy = y - matrix[5]; // by subtracting the origin
-  // return the point {x:?,y:?} by multiplying xx,yy by the inverse matrix
+  // return the mousePosition {x:?,y:?} by multiplying xx,yy by the inverse matrix
   return {
-    x: xx * invMatrix[0] + yy * invMatrix[2],
-    y: xx * invMatrix[1] + yy * invMatrix[3],
+    x: xx * inverseMatrix[0] + yy * inverseMatrix[2],
+    y: xx * inverseMatrix[1] + yy * inverseMatrix[3],
   };
 };

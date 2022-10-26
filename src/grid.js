@@ -21,7 +21,7 @@ let board = function () {
                 x: j,
                 y: i,
               },
-              aspect: {
+              aspectratio: {
                 width: 30,
                 height: 15,
               },

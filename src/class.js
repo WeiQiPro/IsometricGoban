@@ -1,21 +1,16 @@
 class Coordinate {
   constructor({
     position,
-    image,
-    player,
-    adjacent,
-    aspect,
-    letter,
-    number,
+    aspectratio,
+    label,
     circle,
     stone,
   }) {
-    this.CoorPosition = position;
-    this.CoorAspect = aspect;
-    this.CoorLetter = letter;
-    this.CoorNumber = number;
-    this.CoorCircle = circle;
-    this.CoorStone = stone;
+    this.position = position;
+    this.aspectratio = aspectratio;
+    this.label = label || {};
+    this.circle = circle;
+    this.stone = stone;
   }
 
   // all the draw functions here are in utils.js
@@ -23,23 +18,23 @@ class Coordinate {
   // drawLetters && drawNumbers pertain to the coordinate labeling on the outside
 
   drawBoard(boardtype) {
-    return boardtype(this.CoorPosition, this.CoorAspect);
+    return boardtype(this.position, this.aspectratio);
   }
 
   drawLetter(boardtype) {
-    return boardtype(this.CoorPosition, this.CoorAspect, this.CoorLetter);
+    return boardtype(this.position, this.aspectratio, this.label.letter);
   }
 
   drawNumber(boardtype) {
-    return boardtype(this.CoorPosition, this.CoorAspect, this.CoorNumber);
+    return boardtype(this.position, this.aspectratio, this.label.number);
   }
 
   stoneHover(stonetype, stoneColor) {
-    return stonetype(this.CoorPosition, this.CoorAspect, this.CoorCircle.radius, stoneColor)
+    return stonetype(this.position, this.aspectratio, this.circle.radius, stoneColor)
   }
 
   drawStone(stonetype, stoneColor, stoneRadius){
-    if (stoneRadius === undefined){ stoneRadius = this.CoorCircle.radius}
-    return stonetype(this.CoorPosition, this.CoorAspect, stoneRadius, stoneColor)
+    if (stoneRadius === undefined){ stoneRadius = this.circle.radius}
+    return stonetype(this.position, this.aspectratio, stoneRadius, stoneColor)
   }
 }
