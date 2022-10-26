@@ -30,6 +30,10 @@ let board = function () {
                 y: i,
                 radius: 7,
               },
+              stone: {
+                color: null,
+                state: 'empty'
+              }
             })
           );
       }

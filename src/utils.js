@@ -38,6 +38,15 @@ let viewBoardType = function (CoorP, CoorA) {
       CoorA.height,
       CoorA.height
     );
+    goban.visual().fillStyle = ' rgb(160, 110, 49)'
+    goban
+      .visual()
+      .fillRect(
+        CoorP.x * CoorA.height + 30,
+        CoorP.y * CoorA.height + 30,
+        CoorA.height,
+        CoorA.height
+      );
   goban.visual().restore();
 };
 // draws on the mouseCanvas
@@ -76,6 +85,44 @@ let stonemouseHover = function (CoorP, CoorA, radius, CoorC) {
     }
     mouse.visual().closePath();
     mouse.visual().restore();
+  }
+};
+
+let stonedrawType = function (CoorP, CoorA, radius, CoorC) {
+  {
+    stone.visual().save();
+    stone
+      .visual()
+      .transform(
+        matrix[0],
+        matrix[1],
+        matrix[2],
+        matrix[3],
+        matrix[4],
+        matrix[5]
+      );
+    stone.visual().beginPath();
+    stone
+      .visual()
+      .arc(
+        CoorP.x * CoorA.height + 30,
+        CoorP.y * CoorA.height + 30,
+        radius,
+        0,
+        2 * Math.PI
+      );
+    if(CoorC === colorType[2]){
+      stone.visual().strokeStyle = colorType[1];
+      stone.visual().stroke();
+      stone.visual().fillStyle = CoorC;
+      stone.visual().fill();
+    }
+    else {
+      stone.visual().fillStyle = CoorC;
+      stone.visual().fill();
+    }
+    stone.visual().closePath();
+    stone.visual().restore();
   }
 };
 

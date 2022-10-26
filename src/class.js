@@ -8,7 +8,7 @@ class Coordinate {
     letter,
     number,
     circle,
-    stone = null,
+    stone,
   }) {
     this.CoorPosition = position;
     this.CoorImage = image;
@@ -18,7 +18,7 @@ class Coordinate {
     this.CoorLetter = letter;
     this.CoorNumber = number;
     this.CoorCircle = circle;
-    this.stone = stone;
+    this.CoorStone = stone;
   }
 
   // all the draw functions here are in utils.js
@@ -38,6 +38,10 @@ class Coordinate {
   }
 
   stoneHover(stonetype, stoneColor) {
+    return stonetype(this.CoorPosition, this.CoorAspect, this.CoorCircle.radius, stoneColor)
+  }
+
+  drawStone(stonetype, stoneColor){
     return stonetype(this.CoorPosition, this.CoorAspect, this.CoorCircle.radius, stoneColor)
   }
 }

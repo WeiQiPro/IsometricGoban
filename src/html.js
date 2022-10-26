@@ -33,18 +33,24 @@ const mouse = {
                 mouse.worldPos = toWorld(mouse.position.x, mouse.position.y);
 
                 coordinates.forEach((coordinate) => {
-                if (mouseoverCoordinate(mouse.worldPos, coordinate.CoorPosition, coordinate.CoorAspect, coordinate.CoorCircle.radius) && hoveredCoordinate != coordinate) {
-                        if (hoveredCoordinate != null) {
-                                prevhoveredCoordinate = hoveredCoordinate
-                                mouse.visual().save()
-                                mouse.visual().clearRect(0,0,goban.width, goban.height)
-                                mouse.visual().restore()
-                        }
-                        newhoveredCoordinate = coordinate
-                        newhoveredCoordinate.stoneHover(stonemouseHover, colorType[2]);
-                        hoveredCoordinate = newhoveredCoordinate
-                }
-                });
+                        if (mouseoverCoordinate(
+                                mouse.worldPos,
+                                coordinate.CoorPosition,
+                                coordinate.CoorAspect,
+                                coordinate.CoorCircle.radius) &&
+                                hoveredCoordinate != coordinate &&
+                                coordinate.CoorStone.state === 'empty'){
+                                        if (hoveredCoordinate != null) {
+                                                prevhoveredCoordinate = hoveredCoordinate
+                                                mouse.visual().save()
+                                                mouse.visual().clearRect(0,0,goban.width, goban.height)
+                                                mouse.visual().restore()
+                                        }
+                                        newhoveredCoordinate = coordinate
+                                        newhoveredCoordinate.stoneHover(stonemouseHover, currentColor);
+                                        hoveredCoordinate = newhoveredCoordinate
+                                }
+                        });
                 });
         },
         position: {
@@ -55,5 +61,20 @@ const mouse = {
                 x: 0,
                 y: 0,
         },
-        click: false,
+        click: function(){
+                addEventListener('mousedown', (e) =>{
+                        let prevColor = currentColor
+                        let sgfColor
+                        if (prevColor === 'white') {sgfColor = 'W'} else sgfColor = 'B'
+                        if (hoveredCoordinate.CoorStone.state === 'empty'){
+                                hoveredCoordinate.drawStone(stonedrawType, prevColor)
+                                hoveredCoordinate.CoorStone.state = 'filled'
+                                sgf.push(
+                                        [sgfColor, hoveredCoordinate.CoorPosition.x, hoveredCoordinate.CoorPosition.y]
+                                        )
+                                currentColor = nextColor
+                                nextColor = prevColor
+                        }
+                })
+        }
 };

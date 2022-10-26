@@ -2,6 +2,9 @@ let drawCoor = function (y) {
   let x = y;
   initializeCharacters(x);
   drawPhaseA(x);
+  coordinates.forEach(Coordinate => {
+    gridCoordinates[[Coordinate.CoorPosition.x, Coordinate.CoorPosition.y]] = Coordinate
+  })
 };
 
 let drawPhaseA = function (x) {
