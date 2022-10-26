@@ -2,7 +2,11 @@ let coordinates = [];
 let viewType = "iso";
 const matrix = [2, 1, -2, 1, 600, 000];
 let invMatrix = [0, 0, 0, 0, 0, 0];
-
+const stars = [
+    [3,3],[3,9],[3,15],
+    [9,3],[9,9],[9,15],
+    [15,3],[15,9],[15,15],
+  ]
 let hoveredCoordinate = null
 let colorType = ['rgba(0,0,0,1)','black', 'white']
 let playerColor = ['black', 'white']

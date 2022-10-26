@@ -2,6 +2,7 @@ let drawCoor = function (y) {
   let x = y;
   initializeCharacters(x);
   drawPhaseA(x);
+  drawStars()
   coordinates.forEach(Coordinate => {
     gridCoordinates[[Coordinate.CoorPosition.x, Coordinate.CoorPosition.y]] = Coordinate
   })
@@ -39,6 +40,21 @@ let initializeCharacters = function (x) {
     coorArray[i].CoorLetter = intializeLetters(i % 19);
   }
 };
+
+let drawStars = function() {
+  let z = coordinates
+  for(let s = 0; s < stars.length; s++){
+  for(let i = 0; i < z.length; i++){
+      let cx = z[i].CoorPosition.x
+      let cy = z[i].CoorPosition.y
+      let s1 = stars[s][0]
+      let s2 = stars [s][1]
+      if (cx === s1 && cy === s2) {
+          z[i].drawStone(stonedrawType, colorType[1], 3)
+        }
+      }
+    }
+}
 
 let intializeLetters = function (x) {
   const letters = [

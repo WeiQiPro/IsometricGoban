@@ -11,9 +11,6 @@ class Coordinate {
     stone,
   }) {
     this.CoorPosition = position;
-    this.CoorImage = image;
-    this.CoorPlayer = player;
-    this.CoorAdjacent = adjacent;
     this.CoorAspect = aspect;
     this.CoorLetter = letter;
     this.CoorNumber = number;
@@ -41,7 +38,8 @@ class Coordinate {
     return stonetype(this.CoorPosition, this.CoorAspect, this.CoorCircle.radius, stoneColor)
   }
 
-  drawStone(stonetype, stoneColor){
-    return stonetype(this.CoorPosition, this.CoorAspect, this.CoorCircle.radius, stoneColor)
+  drawStone(stonetype, stoneColor, stoneRadius){
+    if (stoneRadius === undefined){ stoneRadius = this.CoorCircle.radius}
+    return stonetype(this.CoorPosition, this.CoorAspect, stoneRadius, stoneColor)
   }
 }
