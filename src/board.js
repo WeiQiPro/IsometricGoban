@@ -6,14 +6,19 @@ class Board {
       [9,3],[9,9],[9,15],
       [15,3],[15,9],[15,15],
   ]
-  this.starpointRadius = 3
+  this.starPointRadius = 3
   this.intersections = []
+  this.intersesctionKey = {}
+  this.lastRow
+  this.firstRow
   }
 
   initialize() {
     this.createInnerState();
     this.generateIntersections();
     this.initializeLabels();
+    this.interestectionObjkeys();
+    this.keyBoardmodifiers();
   }
 
   createInnerState() {
@@ -26,13 +31,13 @@ class Board {
     }
   }
 
-  generateIntersections() {    
+  generateIntersections() {
     this.boardState.forEach((row, i) => {
       row.forEach((Symbol, j) => {
         switch (Symbol) {
           case "x":
             this.intersections.push(
-              new Coordinate({
+              new Intersection({
                 position: {
                   x: j,
                   y: i,
@@ -41,14 +46,11 @@ class Board {
                   width: 30,
                   height: 15,
                 },
-                circle: {
-                  x: j,
-                  y: i,
-                  radius: 7,
-                },
-                stone: {
-                  color: null,
-                  state: 'empty'
+                canvas: {
+                  position: {
+                    x: j * 15 + 30,
+                    y: i * 15 + 30
+                  }
                 }
               })
             );
@@ -56,7 +58,7 @@ class Board {
       });
     });
   }
-  
+
   initializeLabels() {
     let changeLetters = [];
     for (let i = 0; i < this.intersections.length; i++) {
@@ -66,12 +68,24 @@ class Board {
         changeLetters.push(this.intersections[i]);
       }
     }
-    
+
     for (let i = 0; i < changeLetters.length; i++) {
       changeLetters[i].label.letter = letters[i % 19];
     }
   };
-  
+
+  interestectionObjkeys(){
+    this.intersections.forEach(intersection => {
+        let x = intersection.canvas.position.x
+        let y = intersection.canvas.position.y
+        this.intersesctionKey[[x,y]] = intersection
+      }
+    )
+  }
+
+  keyBoardmodifiers(){
+    this.lastRow = this.intersections[360].position.y
+    this.firstRow = this.intersections[0].position.y
+  }
 
 }
-
