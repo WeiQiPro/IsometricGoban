@@ -1,0 +1,23 @@
+class Stone {
+  constructor({}) {
+  this.color
+  this.radius = 6
+  this.adjacent = []
+  this.emptySpaces
+  this.liberties
+  }
+
+
+
+  calculateAdjacentIntersections(){
+
+  }
+
+  calculateEmptySpace(){
+
+  }
+
+  calculateLiberties(){
+
+  }
+}

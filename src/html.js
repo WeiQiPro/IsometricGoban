@@ -1,22 +1,13 @@
-const goban = {
-        board: function () {
-                return document.querySelector("#gobanCanvas");
-        },
-        visual: function () {
-                return goban.board().getContext("2d");
-        },
-        width: 1920,
-        height: 1080,
-};
-
-const stone = {
-        board: function () {
-                return document.querySelector("#stoneCanvas");
-        },
-        visual: function () {
-                return stone.board().getContext("2d");
-        },
-};
+// const goban = {
+//         board: function () {
+//                 return document.querySelector("#gobanCanvas");
+//         },
+//         visual: function () {
+//                 return goban.board().getContext("2d");
+//         },
+//         width: 1920,
+//         height: 1080,
+// };
 
 const mouse = {
         board: function () {
@@ -72,7 +63,7 @@ let stoneIsEmpty = function(){
         if(hoveredCoordinate.stone.state === 'empty'){
           if (prevHoveredCoordinate != hoveredCoordinate) {
                   mouse.visual().save()
-                  mouse.visual().clearRect(0,0,goban.width, goban.height)
+                  mouse.visual().clearRect(0,0, isometricUI.board.width, isometricUI.board.height)
                   mouse.visual().restore()
           }
           if (newhoveredCoordinate === undefined){
@@ -81,3 +72,37 @@ let stoneIsEmpty = function(){
           newhoveredCoordinate.stoneHover(stonemouseHover, currentColor);
           }}
 }
+
+let findHoveredIntersection = function(mouse, intersection){
+
+        // y is CoorAspect.height = 15
+        let modulator = intersection.Height
+        let modulatorHalf = modulator/2
+        // mouse = mouse.isometric
+        let mouseX = mouse.canvas.position.x
+        let mouseY = mouse.canvas.position.y
+
+        let modmouseX = mouseX % modulator
+        let modmouseY = mouseY % modulator
+        let immediate = {
+            intersection: {
+                x: null,
+                y: null
+            }
+        }
+
+        if(modmouseX >= modulatorHalf){
+            immediate.intersection.x = (mouseX + (modulator - modmouseX))
+        } else if (modmouseX <= modulatorHalf) {
+            immediate.intersection.x = (mouseX - modmouseX)
+        }
+
+        if(modmouseY >= modulatorHalf){
+            immediate.intersection.y = (mouseY + (modulator - modmouseY))
+        } else if (modmouseY <= modulatorHalf) {
+            immediate.intersection.y = (mouseY - modmouseY)
+        }
+
+     isometricUI.hoveredIntersection = jsBoard.intersectionKey[[immediate.intersection.x, immediate.intersection.y]]
+
+    }
