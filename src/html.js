@@ -1,13 +1,13 @@
-const goban = {
-        board: function () {
-                return document.querySelector("#gobanCanvas");
-        },
-        visual: function () {
-                return goban.board().getContext("2d");
-        },
-        width: 1920,
-        height: 1080,
-};
+// const goban = {
+//         board: function () {
+//                 return document.querySelector("#gobanCanvas");
+//         },
+//         visual: function () {
+//                 return goban.board().getContext("2d");
+//         },
+//         width: 1920,
+//         height: 1080,
+// };
 
 const stone = {
         board: function () {

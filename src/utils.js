@@ -1,24 +1,8 @@
-let setCanvas = function(canvas){
-  if(canvas != goban.visual()){
-    canvas.fillStyle = "rgba(0, 0, 0, 0)"
-  } else canvas.fillStyle = "white";
-  canvas.fillRect(0, 0, goban.width, goban.height);
-}
-
-let initializeBoard = function () {
-  setCanvas(goban.visual())
-  setCanvas(stone.visual())
-  setCanvas(mouse.visual())
-  board();
-  drawCoor(coordinates);
-};
-
 // draws on the gobanCanvas
 let viewBoardType = function (position, aspectratio) {
-  goban.visual().save();
-  if (viewType === "isometric") {
-    goban
-      .visual()
+  isometricUI.board.visual().save();
+  if (isometricUI.board.viewType === "isometric") {
+    isometricUI.board.visual()
       .transform(
         matrix[0],
         matrix[1],
@@ -28,33 +12,30 @@ let viewBoardType = function (position, aspectratio) {
         matrix[5]
       );
   }
-  goban.visual().lineWidth = 1;
-  goban.visual().strokeStyle = "black";
-  goban
-    .visual()
+  isometricUI.board.visual().lineWidth = 1;
+  isometricUI.board.visual().strokeStyle = "black";
+  isometricUI.board.visual()
     .strokeRect(
       position.x * aspectratio.height + 30,
       position.y * aspectratio.height + 30,
       aspectratio.height,
       aspectratio.height
     );
-    goban.visual().fillStyle = ' rgb(160, 110, 49)'
-    goban
-      .visual()
+    isometricUI.board.visual().fillStyle = ' rgb(160, 110, 49)'
+    isometricUI.board.visual()
       .fillRect(
         position.x * aspectratio.height + 30,
         position.y * aspectratio.height + 30,
         aspectratio.height,
         aspectratio.height
       );
-  goban.visual().restore();
+  isometricUI.board.visual().restore();
 };
 // draws on the mouseCanvas
 let stonemouseHover = function (position, aspectratio, radius, color) {
   {
     mouse.visual().save();
-    mouse
-      .visual()
+    mouse.visual()
       .transform(
         matrix[0],
         matrix[1],
@@ -187,28 +168,3 @@ let coordinateNumbers = function (position, aspectratio, character) {
   stone.visual().restore();
 };
 
-let inverseMatrixFunction = function () {
-  // calculate the inverse transformation
-
-  // first get the cross product of x axis and y axis
-  crossx = matrix[0] * matrix[3] - matrix[1] * matrix[2];
-
-  // now get the inverted axis
-  inverseMatrix[0] = matrix[3] / crossx;
-  inverseMatrix[1] = -matrix[1] / crossx;
-  inverseMatrix[2] = -matrix[2] / crossx;
-  inverseMatrix[3] = matrix[0] / crossx;
-  //inverseMatrix[4] = matrix[4];
-  //inverseMatrix[5] = matrix[5];
-};
-
-let toWorld = function (x, y) {
-  let xx, yy, result;
-  xx = x - matrix[4]; // remove the translation
-  yy = y - matrix[5]; // by subtracting the origin
-  // return the mousePosition {x:?,y:?} by multiplying xx,yy by the inverse matrix
-  return {
-    x: xx * inverseMatrix[0] + yy * inverseMatrix[2],
-    y: xx * inverseMatrix[1] + yy * inverseMatrix[3],
-  };
-};

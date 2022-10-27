@@ -1,108 +1,77 @@
-let drawCoor = function (y) {
-  let x = y;
-  initializelabels(x);
-  drawPhaseA(x);
-  drawStarpoints(coordinates)
-  coordinates.forEach(coordinate => {
-    gridCoordinates[
-      [coordinate.position.x * coordinate.aspectratio.height + 30,
-        coordinate.position.y * coordinate.aspectratio.height + 30]] = coordinate
-      })
-    };
+class Board {
+  constructor() {
+    this.boardState = []
+    this.starPoints = [
+      [3,3],[3,9],[3,15],
+      [9,3],[9,9],[9,15],
+      [15,3],[15,9],[15,15],
+  ]
+  this.starpointRadius = 3
+  this.intersections = []
+  }
 
-let drawPhaseA = function (array) {
-      let lastRow = array[360].position.y;
-      let firstRow = array[0].position.y;
+  initialize() {
+    this.createInnerState();
+    this.generateIntersections();
+    this.initializeLabels();
+  }
 
-      for (let i = 0; i < array.length; i++) {
-        if (i % 19 !== 18 && array[i].position.y < lastRow)
-        array[i].drawBoard(viewBoardType);
-      }
+  createInnerState() {
+    let row = [];
+    for (let x = 0; x < 19; x++) {
+      row.push("x");
+    }
+    for (let y = 0; y < 19; y++) {
+      this.boardState.push(row);
+    }
+  }
 
-      for (let i = 0; i < array.length; i++) {
-        if (i % 19 == 0) array[i].drawLetter(coordinateLetters);
-      }
-
-      for (let i = 0; i < array.length; i++) {
-        if (array[i].position.y == firstRow) array[i].drawNumber(coordinateNumbers);
-      }
-};
-
-let initializelabels = function (array) {
-      let changeLetters = [];
-      for (let i = 0; i < array.length; i++) {
-        array[i].label.letter = intializeLetters(18 - (i % 19))
-        array[i].label.number = intializeNumbers(i % 19)
-        if (array[i].label.letter == "T") {
-          changeLetters.push(array[i]);
+  generateIntersections() {    
+    this.boardState.forEach((row, i) => {
+      row.forEach((Symbol, j) => {
+        switch (Symbol) {
+          case "x":
+            this.intersections.push(
+              new Coordinate({
+                position: {
+                  x: j,
+                  y: i,
+                },
+                aspectratio: {
+                  width: 30,
+                  height: 15,
+                },
+                circle: {
+                  x: j,
+                  y: i,
+                  radius: 7,
+                },
+                stone: {
+                  color: null,
+                  state: 'empty'
+                }
+              })
+            );
         }
+      });
+    });
+  }
+  
+  initializeLabels() {
+    let changeLetters = [];
+    for (let i = 0; i < this.intersections.length; i++) {
+      this.intersections[i].label.letter = letters[18 - (i % 19)]
+      this.intersections[i].label.number = numbers[i % 19]
+      if (this.intersections[i].label.letter == "T") {
+        changeLetters.push(this.intersections[i]);
       }
+    }
+    
+    for (let i = 0; i < changeLetters.length; i++) {
+      changeLetters[i].label.letter = letters[i % 19];
+    }
+  };
+  
 
-      for (let i = 0; i < changeLetters.length; i++) {
-        changeLetters[i].label.letter = intializeLetters(i % 19);
-      }
-};
-
-let drawStarpoints = function(array) {
-      for(let s = 0; s < starpoints.length; s++){
-        for(let i = 0; i < array.length; i++){
-          let intersectionX = array[i].position.x
-          let intersectionY = array[i].position.y
-          let starpointsX = starpoints[s][0]
-          let starpointsY = starpoints[s][1]
-          if (intersectionX === starpointsX && intersectionY === starpointsY) {
-            array[i].drawStone(stonedrawType, colorType[1], starpointRadius)
-          }
-        }
-      }
 }
 
-let intializeLetters = function (i) {
-      const letters = [
-        "A",
-        "B",
-        "C",
-        "D",
-        "E",
-        "F",
-        "G",
-        "H",
-        "J",
-        "K",
-        "L",
-        "M",
-        "N",
-        "O",
-        "P",
-        "Q",
-        "R",
-        "S",
-        "T",
-      ];
-      return letters[i];
-};
-
-let intializeNumbers = function (i) {
-      const numbers = [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        11,
-        12,
-        13,
-        14,
-        15,
-        16,
-        17,
-        18,
-        19,
-      ];
-      return numbers[i];
-};
