@@ -9,8 +9,22 @@ class Stone {
 
 
 
-  calculateAdjacentIntersections(){
-
+  calculateAdjacentIntersections(stoneInterface){
+    let adjacent = 15
+    let x = stoneInterface.stones[[0]]
+    let y = stoneInterface.stones[[1]]
+    stoneInterface.stones.adjacent.push(
+      [stoneInterface.Stone[[x - adjacent,y]]]
+      )
+    stoneInterface.stones.adjacent.push(
+      [stoneInterface.Stone[[x + adjacent,y]]]
+      )
+    stoneInterface.stones.adjacent.push(
+      [stoneInterface.Stone[[x ,y - adjacent]]]
+      )
+    stoneInterface.stones.adjacent.push(
+      [stoneInterface.Stone[[x ,y + adjacent]]]
+      )
   }
 
   calculateEmptySpace(){
