@@ -8,7 +8,7 @@ class Board {
   ]
   this.starPointRadius = 3
   this.intersections = []
-  this.intersesctionKey = {}
+  this.intersectionKey = {}
   this.lastRow
   this.firstRow
   }
@@ -17,7 +17,7 @@ class Board {
     this.createInnerState();
     this.generateIntersections();
     this.initializeLabels();
-    this.interestectionObjkeys();
+    this.intersectionObjkeys();
     this.keyBoardmodifiers();
   }
 
@@ -74,11 +74,11 @@ class Board {
     }
   };
 
-  interestectionObjkeys(){
+  intersectionObjkeys(){
     this.intersections.forEach(intersection => {
         let x = intersection.canvas.position.x
         let y = intersection.canvas.position.y
-        this.intersesctionKey[[x,y]] = intersection
+        this.intersectionKey[[x,y]] = intersection
       }
     )
   }

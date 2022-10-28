@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+    .body{
+      width: 100%;
+    }
+  </style>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SOC-Goban</title>
+</head>
+<body>
+  <canvas width="1920px" height="1080px" style="position: absolute; left: 0; top: 0; z-index: 0;" id="gobanCanvas"></canvas>
+  <canvas width="1920px" height="1080px" style="position: absolute; left: 0; top: 0; z-index: 1;" id="stoneCanvas"></canvas>
+  <canvas width="1920px" height="1080px" style="position: absolute; left: 0; top: 0; z-index: 2;" id="cursorCanvas"></canvas>
+  <script src="goban/Board.js"></script>
+  <script src="goban/Graphics.js"></script>
+  <script src="goban/Augmentation.js"></script>
+  <script src="goban/UserInterface.js"></script>
+</body>
+</html>

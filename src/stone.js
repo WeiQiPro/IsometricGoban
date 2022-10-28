@@ -1,3 +1,22 @@
+let stoneInterface = {
+  initialize:() =>{
+      jsBoard.intersections.forEach(intersection => {
+          let x = intersection.canvas.position.x
+          let y = intersection.canvas.position.y
+          stoneInterface.stones[[x,y]] = {
+              filled: undefined,
+              color: undefined,
+              adjacent: [],
+              emptySpaces: [],
+              liberties: []
+          }
+      })
+  },
+  stones: {},
+  lastPlaced: undefined,
+  hoveredStone: undefined,
+}
+
 class Stone {
   constructor({}) {
   this.color

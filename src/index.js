@@ -39,6 +39,11 @@ let isometricUI = {
     stone: {
         canvas: () => document.querySelector("#stoneCanvas"),
         visual: () => isometricUI.stone.canvas().getContext("2d"),
+        displayStones: [],
+        displayStoneKey: {
+            size: 8,
+            color: 'black' | 'white' ,
+        }
     },
     board: {
             controller: new BoardController(),
@@ -52,32 +57,13 @@ let isometricUI = {
 }
 isometricUI.initialize(jsBoard);
 isometricUI.board.controller.draw(jsBoard)
-
-let stoneInterface = {
-    initialize:() =>{
-        jsBoard.intersections.forEach(intersection => {
-            let x = intersection.canvas.position.x
-            let y = intersection.canvas.position.y
-            stoneInterface.stones[[x,y]] = {
-                filled: undefined,
-                color: undefined,
-                adjacent: [],
-                emptySpaces: [],
-                liberties: []
-            }
-        })
-    },
-    stones: {},
-    lastPlaced: undefined,
-    hoveredStone: undefined,
-}
 stoneInterface.initialize();
 
 mouse.move();
 mouse.click();
 
 
-// modulo modifier, mouse hoveredIntersectioninates, %m/2
+// modulo modifier, mouse hoveredIntersection, %m/2
 // to identify the upper or lower use the half the modifier IE (%m/2 = 2.5 if | %m =  5)
 // if modulo is greater than %m/2 then %m - mod = r, use R to add to the number
 // otherwise if lower just subtract from the number
