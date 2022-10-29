@@ -34,24 +34,25 @@ class Board {
   }
 
   generateCartesianGrid(boardState){
-      boardState.forEach((row, i) => {
-        row.forEach((Symbol, j) => {
-          switch (Symbol) {
-            case ".":
-              this.cartesianIntersections.push(
-                new Intersection({
-                  cartesian: {x: j, y: i}
-                })
-              );
-          }
-        });
+    boardState.forEach((row, i) => {
+      row.forEach((Symbol, j) => {
+        switch (Symbol) {
+          case ".":
+            this.cartesianIntersections.push(
+              new Intersection({
+                cartesian: {x: j, y: i}
+              })
+            );
+        }
       });
+    });
   }
 
   generateIntersectionKeymap(cartesian){
     cartesian.forEach(intersection =>{
-      let x = intersection.cartesian.x * intersection.height + this.offset
-      let y = intersection.cartesian.y * intersection.height + this.offset
+      intersection.setCanvasCoordinates(this.offset)
+      let x = intersection.canvasCoordinate.x
+      let y = intersection.canvasCoordinate.y
       this.intersectionKeymap[[x,y]]= {intersection: {
         cartesian: {
           x: intersection.cartesian.x,
@@ -67,9 +68,7 @@ class Board {
       let x = star.point[i][0] * this.cartesianIntersections[0].height + this.offset
       let y = star.point[i][1] * this.cartesianIntersections[0].height + this.offset
       starPoint[[x,y]]= {
-        star: {
-          point: star.point[i]
-        }
+        star: {point: star.point[i]}
       }
     }
   }
@@ -122,10 +121,18 @@ class Board {
 }
 
 class Intersection{
-  constructor({cartesian}){
+  constructor({cartesian, canvasCoordinate}){
     this.width = 30
     this.height = 15
     this.cartesian = cartesian
+    this.canvasCoordinate = canvasCoordinate
+  }
+
+  setCanvasCoordinates(offset){
+    this.canvasCoordinate = {
+      x: this.cartesian.x * this.height + offset,
+      y: this.cartesian.y * this.height + offset
+    }
   }
 }
 
