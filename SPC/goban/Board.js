@@ -2,18 +2,20 @@ class Board {
   constructor(){
     this.boardState = []
     this.cartesianIntersections = []
+    this.cartesianStarPoints = []
+    this.cartesianLabels = []
     this.intersectionKeymap = {}
-    this.labelKeymap = []
-    this.starPointKey = {}
+    this.labelKeymap = {}
+    this.starPointKeymap = {}
     this.offset = 30
   }
 
   initialize(boardSize){
     let boardState = this.boardState
-    let starPoint = this.starPointKey
+    let starPoint = this.starPointKeymap
     let labelKeymap = this.labelKeymap
     this.createCartesianGrid(boardState, boardSize)
-    this.createstarPointKey(starPoint)
+    this.createstarPointGrid(starPoint)
     this.createLabels(labelKeymap, boardSize)
   }
 
@@ -62,7 +64,12 @@ class Board {
     })
   }
 
-  createstarPointKey(starPoint){
+  createstarPointGrid(starPoint){
+    this.generateStarPointKeymap(starPoint)
+    this.generateCartesianStarPoint(starPoint)
+  }
+
+  generateStarPointKeymap(starPoint){
     for(let i = 0; i < 9; i++){
       let star = new Star()
       let x = star.point[i][0] * this.cartesianIntersections[0].height + this.offset
@@ -73,13 +80,18 @@ class Board {
     }
   }
 
+  generateCartesianStarPoint(starPoint){
+
+  }
+
+
+
   createLabels(labelKeymap, boardSize){
     let temporaryCartesianLabels = []
-    let temporaryLabels = []
-
+    let cartesianLabels = this.cartesianLabels
     this.createLabelState(temporaryCartesianLabels, boardSize)
-    this.generateCartesianLabels(temporaryCartesianLabels, temporaryLabels)
-    this.generateLabelKeymap(temporaryLabels, labelKeymap)
+    this.generateCartesianLabels(temporaryCartesianLabels, cartesianLabels)
+    this.generateLabelKeymap(cartesianLabels, labelKeymap)
   }
 
   createLabelState(temporaryCartesianLabels, boardSize){
@@ -92,12 +104,12 @@ class Board {
     }
   }
 
-  generateCartesianLabels(temporaryCartesianLabels, temporaryLabels){
+  generateCartesianLabels(temporaryCartesianLabels, cartesianLabels){
       temporaryCartesianLabels.forEach((row, i) => {
         row.forEach((Symbol, j) => {
           switch (Symbol) {
             case ".":
-              temporaryLabels.push(
+              cartesianLabels.push(
                 new Character({
                   cartesian: {x: j, y: i},
                 })
@@ -107,8 +119,8 @@ class Board {
       });
   }
 
-  generateLabelKeymap(temporaryLabels, labelKeymap){
-    temporaryLabels.forEach(character =>{
+  generateLabelKeymap(cartesianLabels, labelKeymap){
+    cartesianLabels.forEach(character =>{
       let x = character.cartesian.x * this.cartesianIntersections[0].height + this.offset
       let y = character.cartesian.y * this.cartesianIntersections[0].height + this.offset
       labelKeymap[[x,y]]= {label: {
@@ -153,8 +165,24 @@ class Character {
 }
 
 class Star {
-  constructor(){
+  constructor({
+    cartesian = {
+      x: 0,
+      y: 0
+    },
+    canvasCoordinate
+  }){
     this.point = [[3,3],[3,9],[3,15],[9,3],[9,9],[9,15],[15,3],[15,9],[15,15]]
     this.size = 3
+    this.cartesian = cartesian
+    this.canvasCoordinate = canvasCoordinate
   }
+
+  setCanvasCoordinates(offset){
+    this.canvasIntersection = {
+      x: this.intersection.x * this.height + offset,
+      y: this.intersection.y * this.height + offset
+    }
+  }
+
 }

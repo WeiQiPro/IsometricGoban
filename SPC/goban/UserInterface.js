@@ -6,7 +6,13 @@ let gobanUI = {
     gobanUI.boardLabels = gobanUI.board.labelKeymap
 
     gobanUI.board.initialize(gobanUI.size)
+    gobanUI.setGraphics()
     gobanUI.boardGraphics.initializeBoardGraphics(gobanUI)
+  },
+  setGraphics: () => {
+    gobanUI.boardGraphics.graphics = {
+      goban: gobanUI.visual()
+    }
   },
   canvas: () => document.querySelector('#gobanCanvas'),
   visual: () => gobanUI.canvas().getContext('2d'),

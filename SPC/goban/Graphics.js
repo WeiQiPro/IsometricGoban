@@ -1,6 +1,8 @@
 class Graphics {
-  constructor() {
-    this.color = ['black', 'white', 'rgb(199,108,63)']
+  constructor(graphics) {
+    this.graphics = graphics
+    this.colorGraphics = ['black', 'white', 'rgb(199,108,63)']
+    this.offsetGraphics = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
   }
 
   initializeBoardGraphics(gobanUI){
@@ -33,7 +35,7 @@ class Graphics {
       if (intersection.cartesian.y != lastRow && intersection.cartesian.x != lastColumn ){
         gobanUI.visual().save()
         this.determinedDisplayType(display,  matrix)
-        gobanUI.visual().fillStroke = this.color[2]
+        gobanUI.visual().fillStroke = this.colorGraphics[2]
         gobanUI
           .visual()
           .strokeRect(
@@ -42,7 +44,7 @@ class Graphics {
             height,
             height
           )
-          gobanUI.visual().fillStyle = this.color[2]
+          gobanUI.visual().fillStyle = this.colorGraphics[2]
           gobanUI
             .visual()
             .fillRect(
@@ -57,12 +59,29 @@ class Graphics {
     )
   }
 
-  generateLabelGraphics(){
-
+  generateLabelGraphics(board, display, matrix){
   }
 
-  generateStarPointGraphic(){
-
+  generateStarPointGraphic(board, display, matrix){
+    board.cartesianStarPoints.forEach(star => {
+    gobanUI.visual().save()
+    this.determinedDisplayType(display, matrix)
+    gobanUI.visual().beginPath()
+    gobanUI
+      .visual()
+      .arc(
+        x,
+        y,
+        size,
+        0,
+        2 * Math.PI/2
+      )
+      gobanUI.visual().strokeStyle = this.colorGraphics[0]
+      gobanUI.visual().fill()
+      gobanUI.visual().closePath()
+      gobanUI.visual().restore()
+      }
+    )
   }
 
   responsiveStoneGraphics(){
