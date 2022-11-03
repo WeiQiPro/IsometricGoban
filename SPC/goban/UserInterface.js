@@ -1,28 +1,29 @@
-let gobanUI = {
-  initialize: () => {
-    gobanUI.visual().fillStyle = 'white'
-    gobanUI.visual().fillRect(0, 0, 1920, 1080)
-    gobanUI.boardIntersections = gobanUI.board.intersectionKeymap
-    gobanUI.boardLabels = gobanUI.board.labelKeymap
-
-    gobanUI.board.initialize(gobanUI.size)
-    gobanUI.setGraphics()
-    gobanUI.boardGraphics.initializeBoardGraphics(gobanUI)
+let Goban = {
+  UI: {
+    board: new Board(),
+    display: 'isometric',
+    graphics: new Graphics(),
+    labels: {
+    letters: ["A", "B", "C", "D", "E", "F", "G", "H", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T"],
+    numbers: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
+    },
+    matrix: [2, 1, -2, 1, 600, 000],
+    initialize: (UI) => {
+      Goban.UI.board.initialize(UI)
+      Goban.Graphics.initializeBoardGUI)
+    },
   },
-  setGraphics: () => {
-    gobanUI.boardGraphics.graphics = {
-      goban: gobanUI.visual()
+  Graphics: {
+    interface: new Graphics(),
+    canvas: () => document.querySelector('#gobanCanvas'),
+    visual: () => Goban.Graphics.canvas().getContext('2d'),
+  },
+  Mouse: {
+    screen: {
+      x: () =>{},
+      y: () =>{}
     }
-  },
-  canvas: () => document.querySelector('#gobanCanvas'),
-  visual: () => gobanUI.canvas().getContext('2d'),
-  size: 19,
-  display: 'isometric',
-  matrix: [2, 1, -2, 1, 600, 0],
-  boardGraphics: new Graphics(),
-  board: new Board(),
-  boardIntersections: '',
-  boardLabels: '',
+  }
 }
 
-gobanUI.initialize()
+Goban.UI.initialize(Goban)
