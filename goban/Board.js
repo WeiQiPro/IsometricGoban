@@ -5,6 +5,39 @@ class Board{
     this.keymap = {}
     this.offset = [30, 20, 10, 5, -5, -10, -20, -30]
   }
+  
+  dataInitialize(){
+    this.createGrid()
+
+    this.boardState.forEach((row, i) => {
+      row.forEach((Symbol, j) => {
+        switch (Symbol) {
+          case "x":
+          this.intersections.push(
+            new Intersection({
+              cartesian: {
+                x: j,
+                y: i,
+              },
+              Stone: 'No'
+            })
+            );
+          }
+        });
+      });
+
+      this.intersections.forEach(intersection =>{
+        intersection.initialize(this.offset[0])
+      })
+
+      this.intersections.forEach(intersection =>{
+        let x = intersection.isometric.x
+        let y = intersection.isometric.y
+        this.keymap[[x,y]] = intersection = {
+          Stone: 'No'
+        }
+      })
+  }
 
   initialize(){
     this.createGrid()
@@ -89,9 +122,10 @@ class Intersection{
   }
 
   createCanvas(offset){
+    let height = 15
     this.isometric = {
-      x: this.cartesian.x * this.dimensions.height + offset,
-      y: this.cartesian.y * this.dimensions.height + offset
+      x: this.cartesian.x *  height + offset,
+      y: this.cartesian.y *  height + offset
     }
   }
 

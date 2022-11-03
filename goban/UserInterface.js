@@ -9,7 +9,8 @@ let Goban = {
     matrix: [2, 1, -2, 1, 600, 000],
     inverseMatrix: [],
     initialize: (UI) => {
-      Goban.UI.board.initialize(UI)
+      Goban.UI.board.initialize(UI),
+      DataStructure.Goban.board.dataInitialize(UI)
       Goban.Graphics.controller.initializeBoard(UI)
     },
   },
@@ -19,6 +20,7 @@ let Goban = {
     visual: () => Goban.Graphics.canvas().getContext('2d'),
   },
   Cursor: {
+    onmousedown: () => {},
     canvas: () => document.querySelector('#cursorCanvas'),
     visual: () => Goban.Cursor.canvas().getContext('2d'),
   },

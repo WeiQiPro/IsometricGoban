@@ -27,6 +27,7 @@ let DataStructure = {
   Cursor: {
     hoveredIntersection: undefined,
     coordinates: {
+      onmousemove: () => {},
       screen: {
         x: () =>{},
         y: () =>{}
@@ -44,4 +45,7 @@ let CoordinatesScreenToCanvas = {
   function: () => {}
 }
 
+let FindNearestIntersection = function(){}
+
+CoordinatesScreenToCanvas.MatrixToInverseMatrix()
 CoordinatesScreenToCanvas.function()

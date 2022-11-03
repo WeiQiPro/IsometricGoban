@@ -124,16 +124,71 @@ class Graphics {
   }
 
   responsiveStoneGraphics(){
-    this.generateStoneOnCursorHover()
-    this.generateStoneGraphic()
+    this.generateStoneOnHover()
+    this.generateStoneOnClick()
   }
 
-  generateStoneOnCursorHover(){
-
+  generateStoneOnHover(intersection, display, matrix){
+    let x = intersection.canvas.x
+    let y = intersection.canvas.y
+    let size = this.size[2]
+    let color = DataStructure.players.colorState
+    Goban.Cursor.visual().clearRect(0,0, 1920, 1080);
+    Goban.Cursor.visual().save();
+    determinedDisplayType(display, matrix)
+    Goban.Cursor.visual().beginPath();
+    Goban.Cursor
+      .visual()
+      .arc(
+        x ,
+        y ,
+        size,
+        0,
+        2 * Math.PI
+      );
+    if(color === color[1]){
+      Goban.Cursor.visual().strokeStyle = colorType[1];
+      Goban.Cursor.visual().stroke();
+      Goban.Cursor.visual().fillStyle = color;
+      Goban.Cursor.visual().fill();
+    }
+    else {
+      Goban.Cursor.visual().fillStyle = color[0];
+      Goban.Cursor.visual().fill();
+    }
+    Goban.Cursor.visual().closePath();
+    Goban.Cursor.visual().restore();
   }
 
-  generateStoneGraphic(){
-
+  generateStoneOnClick(intersection, display, matrix){
+    let x = intersection.canvas.x
+    let y = intersection.canvas.y
+    let size = this.size[2]
+    let color = DataStructure.players.colorState
+    Goban.Stone.visual().save();
+    determinedDisplayType(display, matrix)
+    Goban.Stone.visual().beginPath();
+    Goban.Stone
+      .visual()
+      .arc(
+        x ,
+        y ,
+        size,
+        0,
+        2 * Math.PI
+      );
+    if(color === color[1]){
+      Goban.Stone.visual().strokeStyle = colorType[1];
+      Goban.Stone.visual().stroke();
+      Goban.Stone.visual().fillStyle = color;
+      Goban.Stone.visual().fill();
+    }
+    else {
+      Goban.Stone.visual().fillStyle = color[0];
+      Goban.Stone.visual().fill();
+    }
+    Goban.Stone.visual().closePath();
+    Goban.Stone.visual().restore();
   }
 
 }
