@@ -37,7 +37,8 @@ class Board{
                 width: 30,
                 height: 15,
               },
-              StarPoint: 'No'
+              StarPoint: 'No',
+              Stone: 'No'
             })
             );
           }
@@ -64,12 +65,14 @@ class Intersection{
     dimensions,
     labels,
     StarPoint,
+    Stone
   }){
     this.cartesian = cartesian
     this.isometric = isometric
     this.dimensions = dimensions
     this.labels = labels
     this.StarPoint = StarPoint
+    this.Stone = Stone
   }
 
   initialize(offset){
