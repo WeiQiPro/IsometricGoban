@@ -7,6 +7,7 @@ let Goban = {
     numbers: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
     },
     matrix: [2, 1, -2, 1, 600, 000],
+    inverseMatrix: [],
     initialize: (UI) => {
       Goban.UI.board.initialize(UI)
       Goban.Graphics.controller.initializeBoard(UI)

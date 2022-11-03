@@ -21,9 +21,7 @@ let DataStructure = {
     board: new Board(),
     SGF: [],
     boardState: [],
-
     stones: [],
-    keymap: DataStructure.board.keymap,
   },
 
   Cursor: {
@@ -40,3 +38,10 @@ let DataStructure = {
     }
   }
 }
+
+let CoordinatesScreenToCanvas = {
+  MatrixToInverseMatrix: () => {},
+  function: () => {}
+}
+
+CoordinatesScreenToCanvas.function()
