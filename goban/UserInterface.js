@@ -30,5 +30,5 @@ let Goban = {
   }
 }
 
-DataStructure.functions(Goban, DataStructure)
 Goban.UI.initialize(Goban.UI)
+DataStructure.functions(Goban, DataStructure)

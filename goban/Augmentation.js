@@ -1,7 +1,6 @@
 let DataStructure = {
   functions: (goban, dataStructure) => {
     DataStructure.Cursor.coordinates.onmousemove(goban, dataStructure)
-
   },
   players:{
     ID:{
@@ -32,17 +31,17 @@ let DataStructure = {
     hoveredIntersection: undefined,
     coordinates: {
       onmousemove: (goban, dataStructure) => {
-       goban.Cursor.canvas().addEventListener("mousemove", (e) => {
+        goban.Cursor.canvas().addEventListener("mousemove", (e) => {
           let cursorX = e.clientX - Math.round(window.scrollX);
           let cursorY = e.clientY - Math.round(window.scrollY);
-          dataStructure.Cursor.canvas = CoordinatesScreenToCanvas.function(cursorX, cursorY);
-       })
+          dataStructure.Cursor.coordinates.canvas = CoordinatesScreenToCanvas.function(cursorX, cursorY);
+          console.log(FindNearestIntersection(dataStructure))
+        })
       },
       canvas: {
         x: 0,
         y: 0
       }
-
     }
   }
 }
@@ -68,36 +67,38 @@ let CoordinatesScreenToCanvas = {
     return {
       x: xx * inverseMatrix[0] + yy * inverseMatrix[2],
       y: xx * inverseMatrix[1] + yy * inverseMatrix[3],
-    };}
+    };
+  }
 }
 
-let FindNearestIntersection = function(mouse, intersection){
-        let modulator = intersection.Height
-        let modulatorHalf = modulator/2
-        let mouseX = mouse.canvas.position.x
-        let mouseY = mouse.canvas.position.y
+let FindNearestIntersection = function(dataStructure){
+  let modulator = Goban.UI.board.intersections[0].dimensions.height
+  let modulatorHalf = modulator/2
+  let mouseX = Math.floor(dataStructure.Cursor.coordinates.canvas.x)
+  let mouseY = Math.floor(dataStructure.Cursor.coordinates.canvas.y)
 
-        let modmouseX = mouseX % modulator
-        let modmouseY = mouseY % modulator
-        let immediate = {
-            intersection: {
-                x: null,
-                y: null
-            }
-        }
+  console.log(mouseX, mouseY, modulator, modulatorHalf)
+  let modmouseX = mouseX % modulator
+  let modmouseY = mouseY % modulator
+  let immediate = {
+    intersection: {
+      x: null,
+      y: null
+    }
+  }
 
-        if(modmouseX >= modulatorHalf){
-            immediate.intersection.x = (mouseX + (modulator - modmouseX))
-        } else if (modmouseX <= modulatorHalf) {
-            immediate.intersection.x = (mouseX - modmouseX)
-        }
+  if(modmouseX >= modulatorHalf){
+    immediate.intersection.x = (mouseX + (modulator - modmouseX))
+  } else if (modmouseX <= modulatorHalf) {
+    immediate.intersection.x = (mouseX - modmouseX)
+  }
 
-        if(modmouseY >= modulatorHalf){
-            immediate.intersection.y = (mouseY + (modulator - modmouseY))
-        } else if (modmouseY <= modulatorHalf) {
-            immediate.intersection.y = (mouseY - modmouseY)
-        }
+  if(modmouseY >= modulatorHalf){
+    immediate.intersection.y = (mouseY + (modulator - modmouseY))
+  } else if (modmouseY <= modulatorHalf) {
+    immediate.intersection.y = (mouseY - modmouseY)
+  }
 
-     DataStructure.Cursor.hoveredIntersection = jsBoard.intersectionKey[[immediate.intersection.x, immediate.intersection.y]]
+  return DataStructure.Cursor.hoveredIntersection = Goban.UI.board.keymap[[immediate.intersection.x, immediate.intersection.y]]
 
 }
