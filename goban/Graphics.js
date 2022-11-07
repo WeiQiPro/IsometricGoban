@@ -130,9 +130,9 @@ class Graphics {
   }
 
   responsiveStoneGraphics({hovered, clicked}, intersection, display, matrix){
-    if (hovered === 'Yes' && intersection.Stone != 'Yes'){
+    if (hovered === 'Yes' && intersection.stone != 'Yes'){
     this.generateStoneOnHover(intersection, display, matrix)}
-    if (clicked === 'Yes' && intersection.Stone != 'Yes'){
+    if (clicked === 'Yes' && intersection.stone != 'Yes'){
       this.generateStoneOnClick(intersection, display, matrix)
     }
   }
@@ -141,7 +141,7 @@ class Graphics {
     let x = intersection.isometric.x
     let y = intersection.isometric.y
     let size = this.size[2]
-    let color = DataStructure.players.colorState
+    let color = ApplicationState.players.colorState
     Goban.cursor.visual().clearRect(0,0, 1920, 1080);
     Goban.cursor.visual().save();
     this.determinedDisplayType(display, matrix, Goban.cursor)
@@ -174,7 +174,7 @@ class Graphics {
     let x = intersection.isometric.x
     let y = intersection.isometric.y
     let size = this.size[2]
-    let color = DataStructure.players.colorState
+    let color = ApplicationState.players.colorState
     Goban.stone.visual().save();
     this.determinedDisplayType(display, matrix, Goban.stone)
     Goban.stone.visual().beginPath();

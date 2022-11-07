@@ -27,11 +27,9 @@ let Goban = {
 let GobanFunctions = {
   initialize: (UI) => {
     Goban.UI.board.initialize(UI),
-    DataStructure.Goban.board.dataInitialize(UI)
+    ApplicationState.goban.board.dataInitialize(UI)
     Goban.Graphics.controller.initializeBoard(UI)
-    CoordinatesScreenToCanvas.MatrixToInverseMatrix()
+    CoordinatesScreenToCanvas.matrixToInverseMatrix()
   },
 }
 
-GobanFunctions.initialize(Goban.UI)
-DataFunctions.mouseFunctions(Goban, DataStructure)
