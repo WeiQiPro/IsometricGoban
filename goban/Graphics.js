@@ -130,9 +130,9 @@ class Graphics {
   }
 
   responsiveStoneGraphics({hovered, clicked}, intersection, display, matrix){
-    if (hovered === 'Yes' && intersection.Stone != 'Yes'){
+    if (hovered === 'Yes' && intersection.stone != 'Yes'){
     this.generateStoneOnHover(intersection, display, matrix)}
-    if (clicked === 'Yes' && intersection.Stone != 'Yes'){
+    if (clicked === 'Yes' && intersection.stone != 'Yes'){
       this.generateStoneOnClick(intersection, display, matrix)
     }
   }

@@ -19,7 +19,7 @@ class Board{
                 x: j,
                 y: i,
               },
-              Stone: 'No'
+              stone: 'No'
             })
             );
           }
@@ -34,7 +34,7 @@ class Board{
         let x = intersection.isometric.x
         let y = intersection.isometric.y
         this.keymap[[x,y]] = intersection = {
-          Stone: 'No'
+          stone: 'No'
         }
       })
   }
@@ -70,8 +70,8 @@ class Board{
                 width: 30,
                 height: 15,
               },
-              StarPoint: 'No',
-              Stone: 'No'
+              starPoint: 'No',
+              stone: 'No'
             })
             );
           }
@@ -97,15 +97,15 @@ class Intersection{
     isometric,
     dimensions,
     labels,
-    StarPoint,
-    Stone
+    starPoint,
+    stone
   }){
     this.cartesian = cartesian
     this.isometric = isometric
     this.dimensions = dimensions
     this.labels = labels
-    this.StarPoint = StarPoint
-    this.Stone = Stone
+    this.starPoint = starPoint
+    this.stone = stone
   }
 
   initialize(offset){
@@ -137,7 +137,7 @@ class Intersection{
       let cx = this.cartesian.x
       let cy = this.cartesian.y
       if(cx === sx && cy === sy){
-        this.StarPoint = 'Yes'
+        this.starPoint = 'Yes'
       }
     })
   }

@@ -15,7 +15,7 @@ let ApplicationState = {
     }
   },
 
-  Goban: {
+  goban: {
     board: new Board(),
     SGF: [],
     boardState: [],
@@ -114,7 +114,7 @@ let DataFunctions = {
   },
 
   noStoneIntersection: () => {
-    if (ApplicationState.cursor.hoveredIntersection.Stone === "No"){
+    if (ApplicationState.cursor.hoveredIntersection.stone === "No"){
       let hovered = 'Yes'
       let clicked = 'No'
       Goban.Graphics.controller.responsiveStoneGraphics(
@@ -138,20 +138,20 @@ let DataFunctions = {
           Goban.UI.matrix,
           ApplicationState.players.colorState
         )
-        if (ApplicationState.cursor.hoveredIntersection.Stone != 'Yes') return DataFunctions.onClickDataChanges()
+        if (ApplicationState.cursor.hoveredIntersection.stone != 'Yes') return DataFunctions.onClickDataChanges()
       }
     })
   },
 
   changeIntersectionStone: () =>{
-    ApplicationState.cursor.hoveredIntersection.Stone = 'Yes'
-    ApplicationState.Goban.stones.push([ApplicationState.cursor.hoveredIntersection, ApplicationState.players.colorState])
+    ApplicationState.cursor.hoveredIntersection.stone = 'Yes'
+    ApplicationState.goban.stones.push([ApplicationState.cursor.hoveredIntersection, ApplicationState.players.colorState])
   },
 
   changeGobanInformation: () => {
     let SGFtoboardState = []
-    ApplicationState.Goban.SGF.push([ApplicationState.cursor.hoveredIntersection.labels.letter, ApplicationState.cursor.hoveredIntersection.labels.number])
-    ApplicationState.Goban.boardState.push(SGFtoboardState.concat(ApplicationState.Goban.SGF))
+    ApplicationState.goban.SGF.push([ApplicationState.cursor.hoveredIntersection.labels.letter, ApplicationState.cursor.hoveredIntersection.labels.number])
+    ApplicationState.goban.boardState.push(SGFtoboardState.concat(ApplicationState.goban.SGF))
   },
 
   changePlayersInformation: () => {
