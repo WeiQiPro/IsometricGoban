@@ -59,7 +59,7 @@ let CoordinatesScreenToCanvas = {
 
 let MouseInteraction = {
 
-  onClickDataChanges: () => {
+  updateApplicationState: () => {
     MouseInteraction.changeIntersectionStone()
     MouseInteraction.changeGobanInformation()
     MouseInteraction.changePlayersInformation()
@@ -127,20 +127,26 @@ let MouseInteraction = {
   },
 
   setupCallbackToPlayStone: () => {
-    Goban.cursor.canvas().addEventListener("mousedown", () => {
-      if(ApplicationState.cursor.hoveredIntersection != 'Yes'){
-        let hovered = 'No'
-        let clicked = 'Yes'
-        Goban.Graphics.controller.responsiveStoneGraphics(
-          {hovered, clicked},
-          ApplicationState.cursor.hoveredIntersection,
-          Goban.UI.display,
-          Goban.UI.matrix,
-          ApplicationState.players.colorState
-        )
-        if (ApplicationState.cursor.hoveredIntersection.stone != 'Yes') return MouseInteraction.onClickDataChanges()
-      }
-    })
+    Goban.cursor.canvas().addEventListener(
+      "mousedown", 
+      MouseInteraction.playStone
+    )
+  },
+
+  playStone: () => {
+    if(ApplicationState.cursor.hoveredIntersection != 'Yes'){
+      let hovered = 'No'
+      let clicked = 'Yes'
+      Goban.Graphics.controller.responsiveStoneGraphics(
+        {hovered, clicked},
+        ApplicationState.cursor.hoveredIntersection,
+        Goban.UI.display,
+        Goban.UI.matrix,
+        ApplicationState.players.colorState
+      )
+      if (ApplicationState.cursor.hoveredIntersection.stone != 'Yes') 
+      return MouseInteraction.updateApplicationState()
+    }
   },
 
   changeIntersectionStone: () =>{
