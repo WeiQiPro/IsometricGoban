@@ -57,32 +57,32 @@ let CoordinatesScreenToCanvas = {
   }
 }
 
-let DataFunctions = {
+let MouseInteraction = {
 
   onClickDataChanges: () => {
-    DataFunctions.changeIntersectionStone()
-    DataFunctions.changeGobanInformation()
-    DataFunctions.changePlayersInformation()
+    MouseInteraction.changeIntersectionStone()
+    MouseInteraction.changeGobanInformation()
+    MouseInteraction.changePlayersInformation()
   },
 
-  mouseFunctions: (goban, ApplicationState) => {
-    DataFunctions.onmousemove(goban, ApplicationState)
-    DataFunctions.onmousedown(goban, ApplicationState)
+  setupCallbacks: (goban, ApplicationState) => {
+    MouseInteraction.setupCallbackToDisplayHoverStone(goban, ApplicationState)
+    MouseInteraction.setupCallbackToPlayStone(goban, ApplicationState)
   },
 
-  onmousemove: () => {
+  setupCallbackToDisplayHoverStone: () => {
     Goban.cursor.canvas().addEventListener("mousemove", (e) => {
       let cursorX = e.clientX - Math.round(window.scrollX);
       let cursorY = e.clientY - Math.round(window.scrollY);
       ApplicationState.cursor.canvas = CoordinatesScreenToCanvas.mouseToCanvas(cursorX, cursorY);
-      DataFunctions.FindNearestIntersection()
+      MouseInteraction.updateStateWithNearestIntersectionToCursor()
       if(ApplicationState.cursor.hoveredIntersection != undefined){
-          DataFunctions.noStoneIntersection()
-            }
+          MouseInteraction.updateHoverState()
+      }
     })
   },
 
-  FindNearestIntersection: () => {
+  updateStateWithNearestIntersectionToCursor: () => {
     let modulator = Goban.UI.board.intersections[0].dimensions.height
     let modulatorHalf = modulator/2
     let mouseX = Math.floor(ApplicationState.cursor.canvas.x)
@@ -113,7 +113,7 @@ let DataFunctions = {
 
   },
 
-  noStoneIntersection: () => {
+  updateHoverState: () => {
     if (ApplicationState.cursor.hoveredIntersection.stone === "No"){
       let hovered = 'Yes'
       let clicked = 'No'
@@ -126,7 +126,7 @@ let DataFunctions = {
     }
   },
 
-  onmousedown: () => {
+  setupCallbackToPlayStone: () => {
     Goban.cursor.canvas().addEventListener("mousedown", () => {
       if(ApplicationState.cursor.hoveredIntersection != 'Yes'){
         let hovered = 'No'
@@ -138,14 +138,18 @@ let DataFunctions = {
           Goban.UI.matrix,
           ApplicationState.players.colorState
         )
-        if (ApplicationState.cursor.hoveredIntersection.stone != 'Yes') return DataFunctions.onClickDataChanges()
+        if (ApplicationState.cursor.hoveredIntersection.stone != 'Yes') return MouseInteraction.onClickDataChanges()
       }
     })
   },
 
   changeIntersectionStone: () =>{
     ApplicationState.cursor.hoveredIntersection.stone = 'Yes'
-    ApplicationState.goban.stones.push([ApplicationState.cursor.hoveredIntersection, ApplicationState.players.colorState])
+    ApplicationState.goban.stones.push([
+      ApplicationState.cursor.hoveredIntersection, 
+        ApplicationState.players.colorState
+      ]
+        )
   },
 
   changeGobanInformation: () => {

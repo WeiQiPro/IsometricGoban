@@ -34,4 +34,4 @@ let GobanFunctions = {
 }
 
 GobanFunctions.initialize(Goban.UI)
-DataFunctions.mouseFunctions(Goban, ApplicationState)
+MouseInteraction.setupCallbacks(Goban, ApplicationState)
