@@ -98,6 +98,7 @@ class Graphics {
             intersection.isometric.x + this.offset[0],
             intersection.isometric.y + this.offset[0]
             );
+
         Goban.Graphics.visual().restore();
       }
     })
@@ -141,11 +142,11 @@ class Graphics {
     let y = intersection.isometric.y
     let size = this.size[2]
     let color = DataStructure.players.colorState
-    Goban.Cursor.visual().clearRect(0,0, 1920, 1080);
-    Goban.Cursor.visual().save();
-    this.determinedDisplayType(display, matrix, Goban.Cursor)
-    Goban.Cursor.visual().beginPath();
-    Goban.Cursor
+    Goban.cursor.visual().clearRect(0,0, 1920, 1080);
+    Goban.cursor.visual().save();
+    this.determinedDisplayType(display, matrix, Goban.cursor)
+    Goban.cursor.visual().beginPath();
+    Goban.cursor
       .visual()
       .arc(
         x ,
@@ -155,17 +156,17 @@ class Graphics {
         2 * Math.PI
       );
     if(color === this.color[1]){
-      Goban.Cursor.visual().strokeStyle = this.color[0];
-      Goban.Cursor.visual().stroke();
-      Goban.Cursor.visual().fillStyle = color;
-      Goban.Cursor.visual().fill();
+      Goban.cursor.visual().strokeStyle = this.color[0];
+      Goban.cursor.visual().stroke();
+      Goban.cursor.visual().fillStyle = color;
+      Goban.cursor.visual().fill();
     }
     else {
-      Goban.Cursor.visual().fillStyle = this.color[0];
-      Goban.Cursor.visual().fill();
+      Goban.cursor.visual().fillStyle = this.color[0];
+      Goban.cursor.visual().fill();
     }
-    Goban.Cursor.visual().closePath();
-    Goban.Cursor.visual().restore();
+    Goban.cursor.visual().closePath();
+    Goban.cursor.visual().restore();
   }
 
 
@@ -174,10 +175,10 @@ class Graphics {
     let y = intersection.isometric.y
     let size = this.size[2]
     let color = DataStructure.players.colorState
-    Goban.Stone.visual().save();
-    this.determinedDisplayType(display, matrix, Goban.Stone)
-    Goban.Stone.visual().beginPath();
-    Goban.Stone
+    Goban.stone.visual().save();
+    this.determinedDisplayType(display, matrix, Goban.stone)
+    Goban.stone.visual().beginPath();
+    Goban.stone
       .visual()
       .arc(
         x ,
@@ -187,17 +188,17 @@ class Graphics {
         2 * Math.PI
       );
     if(color === this.color[1]){
-      Goban.Stone.visual().strokeStyle = this.color[0];
-      Goban.Stone.visual().stroke();
-      Goban.Stone.visual().fillStyle = color;
-      Goban.Stone.visual().fill();
+      Goban.stone.visual().strokeStyle = this.color[0];
+      Goban.stone.visual().stroke();
+      Goban.stone.visual().fillStyle = color;
+      Goban.stone.visual().fill();
     }
     else {
-      Goban.Stone.visual().fillStyle = this.color[0];
-      Goban.Stone.visual().fill();
+      Goban.stone.visual().fillStyle = this.color[0];
+      Goban.stone.visual().fill();
     }
-    Goban.Stone.visual().closePath();
-    Goban.Stone.visual().restore();
+    Goban.stone.visual().closePath();
+    Goban.stone.visual().restore();
   }
 
 }

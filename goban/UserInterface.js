@@ -8,27 +8,30 @@ let Goban = {
     },
     matrix:[2, 1, -2, 1, 600, 000],
     inverseMatrix: [],
-    initialize: (UI) => {
-      Goban.UI.board.initialize(UI),
-      DataStructure.Goban.board.dataInitialize(UI)
-      Goban.Graphics.controller.initializeBoard(UI)
-      CoordinatesScreenToCanvas.MatrixToInverseMatrix()
-    },
   },
   Graphics: {
     controller: new Graphics(),
     canvas: () => document.querySelector('#gobanCanvas'),
     visual: () => Goban.Graphics.canvas().getContext('2d'),
   },
-  Cursor: {
+  cursor: {
     canvas: () => document.querySelector('#cursorCanvas'),
-    visual: () => Goban.Cursor.canvas().getContext('2d'),
+    visual: () => Goban.cursor.canvas().getContext('2d'),
   },
-  Stone: {
+  stone: {
     canvas: () => document.querySelector('#stoneCanvas'),
-    visual: () => Goban.Stone.canvas().getContext('2d'),
+    visual: () => Goban.stone.canvas().getContext('2d'),
   }
 }
 
-Goban.UI.initialize(Goban.UI)
-DataStructure.functions(Goban, DataStructure)
+let GobanFunctions = {
+  initialize: (UI) => {
+    Goban.UI.board.initialize(UI),
+    DataStructure.Goban.board.dataInitialize(UI)
+    Goban.Graphics.controller.initializeBoard(UI)
+    CoordinatesScreenToCanvas.MatrixToInverseMatrix()
+  },
+}
+
+GobanFunctions.initialize(Goban.UI)
+DataFunctions.mouseFunctions(Goban, DataStructure)

@@ -1,20 +1,4 @@
 let DataStructure = {
-  onClickDataChanges: () => {
-    let SGFtoboardState = []
-    DataStructure.Cursor.hoveredIntersection.Stone = 'Yes'
-    DataStructure.Goban.SGF.push([DataStructure.Cursor.hoveredIntersection.labels.letter, DataStructure.Cursor.hoveredIntersection.labels.number])
-    DataStructure.Goban.boardState.push(SGFtoboardState.concat(DataStructure.Goban.SGF))
-    DataStructure.Goban.stones.push([DataStructure.Cursor.hoveredIntersection, DataStructure.players.colorState])
-    DataStructure.players.turn += 1
-    if(DataStructure.players.colorState === 'black'){
-      DataStructure.players.colorState = 'white'
-    } else DataStructure.players.colorState = 'black'
-  },
-  functions: (goban, dataStructure) => {
-    DataStructure.Cursor.coordinates.onmousemove(goban, dataStructure)
-    DataStructure.Cursor.coordinates.onmousedown(goban, dataStructure)
-  },
-
   players:{
     ID:{
       1: undefined,
@@ -29,7 +13,6 @@ let DataStructure = {
     black: {
       captures: 0
     }
-
   },
 
   Goban: {
@@ -39,48 +22,11 @@ let DataStructure = {
     stones: [],
   },
 
-  Cursor: {
+  cursor: {
     hoveredIntersection: undefined,
-    coordinates: {
-      onmousemove: (goban, dataStructure) => {
-        goban.Cursor.canvas().addEventListener("mousemove", (e) => {
-          let cursorX = e.clientX - Math.round(window.scrollX);
-          let cursorY = e.clientY - Math.round(window.scrollY);
-          dataStructure.Cursor.coordinates.canvas = CoordinatesScreenToCanvas.function(cursorX, cursorY);
-          FindNearestIntersection(dataStructure)
-          if(dataStructure.Cursor.hoveredIntersection != undefined){
-          if (dataStructure.Cursor.hoveredIntersection.Stone === "No"){
-            let hovered = 'Yes'
-            let clicked = 'No'
-            Goban.Graphics.controller.responsiveStoneGraphics(
-              {hovered, clicked},
-              dataStructure.Cursor.hoveredIntersection,
-              Goban.UI.display,
-              Goban.UI.matrix
-              )
-          }}
-        })
-      },
-      onmousedown: () => {
-        Goban.Cursor.canvas().addEventListener("mousedown", () => {
-          if(DataStructure.Cursor.hoveredIntersection != 'Yes'){
-            let hovered = 'No'
-            let clicked = 'Yes'
-            Goban.Graphics.controller.responsiveStoneGraphics(
-              {hovered, clicked},
-              DataStructure.Cursor.hoveredIntersection,
-              Goban.UI.display,
-              Goban.UI.matrix,
-              DataStructure.players.colorState
-            )
-            if (DataStructure.Cursor.hoveredIntersection.Stone != 'Yes') return DataStructure.onClickDataChanges()
-          }
-        })
-      },
-      canvas: {
-        x: 0,
-        y: 0
-      }
+    canvas: {
+      x: 0,
+      y: 0
     }
   }
 }
@@ -97,7 +43,8 @@ let CoordinatesScreenToCanvas = {
     inverseMatrix[3] = matrix[0] / crossProduct;
 
   },
-  function: (x, y) => {
+
+  mouseToCanvas: (x, y) => {
     let matrix = Goban.UI.matrix
     let inverseMatrix = Goban.UI.inverseMatrix
     let xx, yy, result;
@@ -110,33 +57,108 @@ let CoordinatesScreenToCanvas = {
   }
 }
 
-let FindNearestIntersection = function(dataStructure){
-  let modulator = Goban.UI.board.intersections[0].dimensions.height
-  let modulatorHalf = modulator/2
-  let mouseX = Math.floor(dataStructure.Cursor.coordinates.canvas.x)
-  let mouseY = Math.floor(dataStructure.Cursor.coordinates.canvas.y)
+let DataFunctions = {
 
-  let modmouseX = mouseX % modulator
-  let modmouseY = mouseY % modulator
-  let immediate = {
-    intersection: {
-      x: null,
-      y: null
+  onClickDataChanges: () => {
+    DataFunctions.changeIntersectionStone()
+    DataFunctions.changeGobanInformation()
+    DataFunctions.changePlayersInformation()
+  },
+
+  mouseFunctions: (goban, dataStructure) => {
+    DataFunctions.onmousemove(goban, dataStructure)
+    DataFunctions.onmousedown(goban, dataStructure)
+  },
+
+  onmousemove: () => {
+    Goban.cursor.canvas().addEventListener("mousemove", (e) => {
+      let cursorX = e.clientX - Math.round(window.scrollX);
+      let cursorY = e.clientY - Math.round(window.scrollY);
+      DataStructure.cursor.canvas = CoordinatesScreenToCanvas.mouseToCanvas(cursorX, cursorY);
+      DataFunctions.FindNearestIntersection()
+      if(DataStructure.cursor.hoveredIntersection != undefined){
+          DataFunctions.noStoneIntersection()
+            }
+    })
+  },
+
+  FindNearestIntersection: () => {
+    let modulator = Goban.UI.board.intersections[0].dimensions.height
+    let modulatorHalf = modulator/2
+    let mouseX = Math.floor(DataStructure.cursor.canvas.x)
+    let mouseY = Math.floor(DataStructure.cursor.canvas.y)
+
+    let modmouseX = mouseX % modulator
+    let modmouseY = mouseY % modulator
+    let immediate = {
+      intersection: {
+        x: null,
+        y: null
+      }
     }
-  }
 
-  if(modmouseX >= modulatorHalf){
-    immediate.intersection.x = (mouseX + (modulator - modmouseX))
-  } else if (modmouseX <= modulatorHalf) {
-    immediate.intersection.x = (mouseX - modmouseX)
-  }
+    if(modmouseX >= modulatorHalf){
+      immediate.intersection.x = (mouseX + (modulator - modmouseX))
+    } else if (modmouseX <= modulatorHalf) {
+      immediate.intersection.x = (mouseX - modmouseX)
+    }
 
-  if(modmouseY >= modulatorHalf){
-    immediate.intersection.y = (mouseY + (modulator - modmouseY))
-  } else if (modmouseY <= modulatorHalf) {
-    immediate.intersection.y = (mouseY - modmouseY)
-  }
+    if(modmouseY >= modulatorHalf){
+      immediate.intersection.y = (mouseY + (modulator - modmouseY))
+    } else if (modmouseY <= modulatorHalf) {
+      immediate.intersection.y = (mouseY - modmouseY)
+    }
 
-  return DataStructure.Cursor.hoveredIntersection = Goban.UI.board.keymap[[immediate.intersection.x, immediate.intersection.y]]
+    return DataStructure.cursor.hoveredIntersection = Goban.UI.board.keymap[[immediate.intersection.x, immediate.intersection.y]]
+
+  },
+
+  noStoneIntersection: () => {
+    if (DataStructure.cursor.hoveredIntersection.Stone === "No"){
+      let hovered = 'Yes'
+      let clicked = 'No'
+      Goban.Graphics.controller.responsiveStoneGraphics(
+        {hovered, clicked},
+        DataStructure.cursor.hoveredIntersection,
+        Goban.UI.display,
+        Goban.UI.matrix
+        )
+    }
+  },
+
+  onmousedown: () => {
+    Goban.cursor.canvas().addEventListener("mousedown", () => {
+      if(DataStructure.cursor.hoveredIntersection != 'Yes'){
+        let hovered = 'No'
+        let clicked = 'Yes'
+        Goban.Graphics.controller.responsiveStoneGraphics(
+          {hovered, clicked},
+          DataStructure.cursor.hoveredIntersection,
+          Goban.UI.display,
+          Goban.UI.matrix,
+          DataStructure.players.colorState
+        )
+        if (DataStructure.cursor.hoveredIntersection.Stone != 'Yes') return DataFunctions.onClickDataChanges()
+      }
+    })
+  },
+
+  changeIntersectionStone: () =>{
+    DataStructure.cursor.hoveredIntersection.Stone = 'Yes'
+    DataStructure.Goban.stones.push([DataStructure.cursor.hoveredIntersection, DataStructure.players.colorState])
+  },
+
+  changeGobanInformation: () => {
+    let SGFtoboardState = []
+    DataStructure.Goban.SGF.push([DataStructure.cursor.hoveredIntersection.labels.letter, DataStructure.cursor.hoveredIntersection.labels.number])
+    DataStructure.Goban.boardState.push(SGFtoboardState.concat(DataStructure.Goban.SGF))
+  },
+
+  changePlayersInformation: () => {
+    DataStructure.players.turn += 1
+    if(DataStructure.players.colorState === 'black'){
+      DataStructure.players.colorState = 'white'
+    } else DataStructure.players.colorState = 'black'
+  }
 
 }
