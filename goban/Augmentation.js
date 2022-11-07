@@ -1,4 +1,4 @@
-let DataStructure = {
+let ApplicationState = {
   players:{
     ID:{
       1: undefined,
@@ -65,18 +65,18 @@ let DataFunctions = {
     DataFunctions.changePlayersInformation()
   },
 
-  mouseFunctions: (goban, dataStructure) => {
-    DataFunctions.onmousemove(goban, dataStructure)
-    DataFunctions.onmousedown(goban, dataStructure)
+  mouseFunctions: (goban, ApplicationState) => {
+    DataFunctions.onmousemove(goban, ApplicationState)
+    DataFunctions.onmousedown(goban, ApplicationState)
   },
 
   onmousemove: () => {
     Goban.cursor.canvas().addEventListener("mousemove", (e) => {
       let cursorX = e.clientX - Math.round(window.scrollX);
       let cursorY = e.clientY - Math.round(window.scrollY);
-      DataStructure.cursor.canvas = CoordinatesScreenToCanvas.mouseToCanvas(cursorX, cursorY);
+      ApplicationState.cursor.canvas = CoordinatesScreenToCanvas.mouseToCanvas(cursorX, cursorY);
       DataFunctions.FindNearestIntersection()
-      if(DataStructure.cursor.hoveredIntersection != undefined){
+      if(ApplicationState.cursor.hoveredIntersection != undefined){
           DataFunctions.noStoneIntersection()
             }
     })
@@ -85,8 +85,8 @@ let DataFunctions = {
   FindNearestIntersection: () => {
     let modulator = Goban.UI.board.intersections[0].dimensions.height
     let modulatorHalf = modulator/2
-    let mouseX = Math.floor(DataStructure.cursor.canvas.x)
-    let mouseY = Math.floor(DataStructure.cursor.canvas.y)
+    let mouseX = Math.floor(ApplicationState.cursor.canvas.x)
+    let mouseY = Math.floor(ApplicationState.cursor.canvas.y)
 
     let modmouseX = mouseX % modulator
     let modmouseY = mouseY % modulator
@@ -109,17 +109,17 @@ let DataFunctions = {
       immediate.intersection.y = (mouseY - modmouseY)
     }
 
-    return DataStructure.cursor.hoveredIntersection = Goban.UI.board.keymap[[immediate.intersection.x, immediate.intersection.y]]
+    return ApplicationState.cursor.hoveredIntersection = Goban.UI.board.keymap[[immediate.intersection.x, immediate.intersection.y]]
 
   },
 
   noStoneIntersection: () => {
-    if (DataStructure.cursor.hoveredIntersection.Stone === "No"){
+    if (ApplicationState.cursor.hoveredIntersection.Stone === "No"){
       let hovered = 'Yes'
       let clicked = 'No'
       Goban.Graphics.controller.responsiveStoneGraphics(
         {hovered, clicked},
-        DataStructure.cursor.hoveredIntersection,
+        ApplicationState.cursor.hoveredIntersection,
         Goban.UI.display,
         Goban.UI.matrix
         )
@@ -128,37 +128,37 @@ let DataFunctions = {
 
   onmousedown: () => {
     Goban.cursor.canvas().addEventListener("mousedown", () => {
-      if(DataStructure.cursor.hoveredIntersection != 'Yes'){
+      if(ApplicationState.cursor.hoveredIntersection != 'Yes'){
         let hovered = 'No'
         let clicked = 'Yes'
         Goban.Graphics.controller.responsiveStoneGraphics(
           {hovered, clicked},
-          DataStructure.cursor.hoveredIntersection,
+          ApplicationState.cursor.hoveredIntersection,
           Goban.UI.display,
           Goban.UI.matrix,
-          DataStructure.players.colorState
+          ApplicationState.players.colorState
         )
-        if (DataStructure.cursor.hoveredIntersection.Stone != 'Yes') return DataFunctions.onClickDataChanges()
+        if (ApplicationState.cursor.hoveredIntersection.Stone != 'Yes') return DataFunctions.onClickDataChanges()
       }
     })
   },
 
   changeIntersectionStone: () =>{
-    DataStructure.cursor.hoveredIntersection.Stone = 'Yes'
-    DataStructure.Goban.stones.push([DataStructure.cursor.hoveredIntersection, DataStructure.players.colorState])
+    ApplicationState.cursor.hoveredIntersection.Stone = 'Yes'
+    ApplicationState.Goban.stones.push([ApplicationState.cursor.hoveredIntersection, ApplicationState.players.colorState])
   },
 
   changeGobanInformation: () => {
     let SGFtoboardState = []
-    DataStructure.Goban.SGF.push([DataStructure.cursor.hoveredIntersection.labels.letter, DataStructure.cursor.hoveredIntersection.labels.number])
-    DataStructure.Goban.boardState.push(SGFtoboardState.concat(DataStructure.Goban.SGF))
+    ApplicationState.Goban.SGF.push([ApplicationState.cursor.hoveredIntersection.labels.letter, ApplicationState.cursor.hoveredIntersection.labels.number])
+    ApplicationState.Goban.boardState.push(SGFtoboardState.concat(ApplicationState.Goban.SGF))
   },
 
   changePlayersInformation: () => {
-    DataStructure.players.turn += 1
-    if(DataStructure.players.colorState === 'black'){
-      DataStructure.players.colorState = 'white'
-    } else DataStructure.players.colorState = 'black'
+    ApplicationState.players.turn += 1
+    if(ApplicationState.players.colorState === 'black'){
+      ApplicationState.players.colorState = 'white'
+    } else ApplicationState.players.colorState = 'black'
   }
 
 }
