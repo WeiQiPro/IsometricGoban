@@ -3,7 +3,7 @@ class Graphics {
     this.graphics = graphics
     this.color = ['black', 'white', 'rgb(199,108,63)']
     this.offset = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
-    this.size = [3, 6, 9, 12, 15]
+    this.size = [3, 6, 7.5, 9, 10, 12, 15]
   }
 
   initializeBoard(UI){
@@ -15,12 +15,17 @@ class Graphics {
     this.generateLabelGraphics(board, display, matrix)
   }
 
-  determinedDisplayType(display, matrix){
+  determinedDisplayType(display, matrix, type){
     if (display === 'cartesian') {return}
     if (display === 'isometric') {
-      return Goban.Graphics.visual().transform(
-        matrix[0],matrix[1],matrix[2],matrix[3],matrix[4],matrix[5]
-      )
+      return type.visual().transform(
+        matrix[0],
+        matrix[1],
+        matrix[2],
+        matrix[3],
+        matrix[4],
+        matrix[5]
+        )
     }
   }
 
@@ -36,7 +41,7 @@ class Graphics {
       let height = intersection.dimensions.height
       if (intersection.cartesian.y != lastRow && intersection.cartesian.x != lastColumn ){
         Goban.Graphics.visual().save()
-        this.determinedDisplayType(display,  matrix)
+        this.determinedDisplayType(display,  matrix, Goban.Graphics)
         Goban.Graphics.visual().fillStroke = this.color[2]
         Goban.Graphics
           .visual()
@@ -70,7 +75,7 @@ class Graphics {
       Goban.Graphics.visual().font = "12px serif";
       Goban.Graphics.visual().fillStyle = "black";
       Goban.Graphics.visual().save();
-      this.determinedDisplayType(display,  matrix)
+      this.determinedDisplayType(display,  matrix, Goban.Graphics)
       Goban.Graphics.visual().beginPath();
       Goban.Graphics
         .visual()
@@ -85,7 +90,7 @@ class Graphics {
         Goban.Graphics.visual().font = "12px serif";
         Goban.Graphics.visual().fillStyle = "black";
         Goban.Graphics.visual().save();
-        this.determinedDisplayType(display,  matrix)
+        this.determinedDisplayType(display,  matrix, Goban.Graphics)
         Goban.Graphics.visual().beginPath();
         Goban.Graphics
           .visual()
@@ -104,7 +109,7 @@ class Graphics {
     board.intersections.forEach(intersection =>{
       if (intersection.StarPoint === 'Yes'){
         Goban.Graphics.visual().save()
-        this.determinedDisplayType(display, matrix)
+        this.determinedDisplayType(display, matrix, Goban.Graphics)
         Goban.Graphics.visual().beginPath()
         Goban.Graphics
           .visual()
@@ -123,19 +128,22 @@ class Graphics {
     )
   }
 
-  responsiveStoneGraphics(){
-    this.generateStoneOnHover()
-    this.generateStoneOnClick()
+  responsiveStoneGraphics({hovered, clicked}, intersection, display, matrix){
+    if (hovered === 'Yes' && intersection.Stone != 'Yes'){
+    this.generateStoneOnHover(intersection, display, matrix)}
+    if (clicked === 'Yes' && intersection.Stone != 'Yes'){
+      this.generateStoneOnClick(intersection, display, matrix)
+    }
   }
 
   generateStoneOnHover(intersection, display, matrix){
-    let x = intersection.canvas.x
-    let y = intersection.canvas.y
+    let x = intersection.isometric.x
+    let y = intersection.isometric.y
     let size = this.size[2]
     let color = DataStructure.players.colorState
     Goban.Cursor.visual().clearRect(0,0, 1920, 1080);
     Goban.Cursor.visual().save();
-    determinedDisplayType(display, matrix)
+    this.determinedDisplayType(display, matrix, Goban.Cursor)
     Goban.Cursor.visual().beginPath();
     Goban.Cursor
       .visual()
@@ -146,27 +154,28 @@ class Graphics {
         0,
         2 * Math.PI
       );
-    if(color === color[1]){
-      Goban.Cursor.visual().strokeStyle = colorType[1];
+    if(color === this.color[1]){
+      Goban.Cursor.visual().strokeStyle = this.color[0];
       Goban.Cursor.visual().stroke();
       Goban.Cursor.visual().fillStyle = color;
       Goban.Cursor.visual().fill();
     }
     else {
-      Goban.Cursor.visual().fillStyle = color[0];
+      Goban.Cursor.visual().fillStyle = this.color[0];
       Goban.Cursor.visual().fill();
     }
     Goban.Cursor.visual().closePath();
     Goban.Cursor.visual().restore();
   }
 
+
   generateStoneOnClick(intersection, display, matrix){
-    let x = intersection.canvas.x
-    let y = intersection.canvas.y
+    let x = intersection.isometric.x
+    let y = intersection.isometric.y
     let size = this.size[2]
     let color = DataStructure.players.colorState
     Goban.Stone.visual().save();
-    determinedDisplayType(display, matrix)
+    this.determinedDisplayType(display, matrix, Goban.Stone)
     Goban.Stone.visual().beginPath();
     Goban.Stone
       .visual()
@@ -177,14 +186,14 @@ class Graphics {
         0,
         2 * Math.PI
       );
-    if(color === color[1]){
-      Goban.Stone.visual().strokeStyle = colorType[1];
+    if(color === this.color[1]){
+      Goban.Stone.visual().strokeStyle = this.color[0];
       Goban.Stone.visual().stroke();
       Goban.Stone.visual().fillStyle = color;
       Goban.Stone.visual().fill();
     }
     else {
-      Goban.Stone.visual().fillStyle = color[0];
+      Goban.Stone.visual().fillStyle = this.color[0];
       Goban.Stone.visual().fill();
     }
     Goban.Stone.visual().closePath();
