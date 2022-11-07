@@ -29,7 +29,7 @@ let GobanFunctions = {
     Goban.UI.board.initialize(UI),
     ApplicationState.goban.board.dataInitialize(UI)
     Goban.Graphics.controller.initializeBoard(UI)
-    CoordinatesScreenToCanvas.MatrixToInverseMatrix()
+    CoordinatesScreenToCanvas.matrixToInverseMatrix()
   },
 }
 

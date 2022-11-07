@@ -32,7 +32,7 @@ let ApplicationState = {
 }
 
 let CoordinatesScreenToCanvas = {
-  MatrixToInverseMatrix: () => {
+  matrixToInverseMatrix: () => {
     let matrix = Goban.UI.matrix
     let inverseMatrix = Goban.UI.inverseMatrix
     crossProduct = matrix[0] * matrix[3] - matrix[1] * matrix[2];
