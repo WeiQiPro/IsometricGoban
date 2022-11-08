@@ -24,6 +24,10 @@ let ApplicationState = {
 
   cursor: {
     hoveredIntersection: undefined,
+    screen:{
+      x: 0,
+      y: 0,
+    },
     canvas: {
       x: 0,
       y: 0
@@ -72,8 +76,8 @@ let MouseInteraction = {
 
   setupCallbackToDisplayHoverStone: () => {
     Goban.cursor.canvas().addEventListener("mousemove", (e) => {
-      let cursorX = e.clientX - Math.round(window.scrollX);
-      let cursorY = e.clientY - Math.round(window.scrollY);
+      let cursorX = ApplicationState.cursor.screen.x = e.clientX - Math.round(window.scrollX);
+      let cursorY = ApplicationState.cursor.screen.y = e.clientY - Math.round(window.scrollY);
       ApplicationState.cursor.canvas = CoordinatesScreenToCanvas.mouseToCanvas(cursorX, cursorY);
       MouseInteraction.updateStateWithNearestIntersectionToCursor()
       if(ApplicationState.cursor.hoveredIntersection != undefined){
@@ -128,7 +132,7 @@ let MouseInteraction = {
 
   setupCallbackToPlayStone: () => {
     Goban.cursor.canvas().addEventListener(
-      "mousedown", 
+      "mousedown",
       MouseInteraction.playStone
     )
   },
@@ -144,7 +148,7 @@ let MouseInteraction = {
         Goban.UI.matrix,
         ApplicationState.players.colorState
       )
-      if (ApplicationState.cursor.hoveredIntersection.stone != 'Yes') 
+      if (ApplicationState.cursor.hoveredIntersection.stone != 'Yes')
       return MouseInteraction.updateApplicationState()
     }
   },
@@ -152,7 +156,7 @@ let MouseInteraction = {
   changeIntersectionStone: () =>{
     ApplicationState.cursor.hoveredIntersection.stone = 'Yes'
     ApplicationState.goban.stones.push([
-      ApplicationState.cursor.hoveredIntersection, 
+      ApplicationState.cursor.hoveredIntersection,
         ApplicationState.players.colorState
       ]
         )

@@ -1,11 +1,11 @@
 Functionality:
 
-[] Build Visual Grid
-    []Isomer Build
-    []Homemade Grid
-[] Make it Isometric
+[x] Build Visual Grid
+    [x]Isomer Build
+    [x]Homemade Grid
+[x] Make it Isometric
 [] Render Stones
-[] Alternate Colors
+[x] Alternate Colors
 [] Go rules
 [] Audio
     [] Stone click
